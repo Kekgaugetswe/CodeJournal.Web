@@ -1,7 +1,9 @@
 import { CategoryService } from './../services/category.service';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AddCategoryRequest } from '../models/add-category-request.model';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-category',
@@ -9,10 +11,11 @@ import { AddCategoryRequest } from '../models/add-category-request.model';
   templateUrl: './add-category.component.html',
   styleUrl: './add-category.component.css',
 })
-export class AddCategoryComponent {
+export class AddCategoryComponent  implements OnDestroy{
   model: AddCategoryRequest;
+  private addCategorySubscription?: Subscription
 
-  constructor(private categoryService: CategoryService) {
+  constructor(private readonly categoryService: CategoryService, private readonly router: Router) {
     this.model = {
       name: '',
       urlHandle: '',
@@ -21,17 +24,19 @@ export class AddCategoryComponent {
 
   onFormSubmit() {
 
-    this.categoryService.addCategory(this.model)
+    this.addCategorySubscription = this.categoryService.addCategory(this.model)
     .subscribe({
       next: (response) => {
+
+        this.router.navigateByUrl('/admin/categories');
         console.log('Category added successfully', response);
-      },
-      error: (error) => {
-        console.error('Error adding category', error);
-      },
-      complete: () => {
-        console.log('Request completed');
       }
     });
   }
+
+  ngOnDestroy(): void {
+    this.addCategorySubscription?.unsubscribe();
+  }
+
+
 }
