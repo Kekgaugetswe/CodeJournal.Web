@@ -38,4 +38,10 @@ export class CategoryService {
       updateCategoryRequest
     );
   }
+
+  deleteCategory(id: string): Observable<Category> {
+    return this.http.delete<Category>(
+      `${environment.apiBaseUrl}/api/category/${id}`
+    );
+  }
 }
