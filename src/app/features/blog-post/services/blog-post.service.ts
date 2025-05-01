@@ -1,3 +1,4 @@
+import { UpdateBlogPost } from './../models/update-blog-post.model';
 import { BlogPost } from './../models/blog-post.model';
 import { Observable } from 'rxjs';
 import { AddBlogPost } from './../models/add-blog-post.model';
@@ -25,6 +26,14 @@ export class BlogPostService {
   getBlogPostById(id: string): Observable<BlogPost> {
     return this.http.get<BlogPost>(
       `${environment.apiBaseUrl}/api/blogpost/${id}`
+    );
+  }
+
+  UpdateBlogPost(id: string, updatedBlogPost: UpdateBlogPost): Observable<BlogPost>{
+
+    return this.http.put<BlogPost>(
+      `${environment.apiBaseUrl}/api/blogpost/${id}`,
+      updatedBlogPost
     );
   }
 }
