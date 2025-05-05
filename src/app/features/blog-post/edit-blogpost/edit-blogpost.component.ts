@@ -9,10 +9,11 @@ import { MarkdownModule } from 'ngx-markdown';
 import { Category } from '../../category/models/category-model.model';
 import { CategoryService } from '../../category/services/category.service';
 import { UpdateBlogPost } from '../models/update-blog-post.model';
+import { ImageSelectorComponent } from '../../../shared/components/image-selector/image-selector.component';
 
 @Component({
   selector: 'app-edit-blogpost',
-  imports: [CommonModule, FormsModule, MarkdownModule],
+  imports: [CommonModule, FormsModule, MarkdownModule, ImageSelectorComponent],
   templateUrl: './edit-blogpost.component.html',
   styleUrl: './edit-blogpost.component.css',
 })
@@ -27,6 +28,7 @@ export class EditBlogpostComponent implements OnInit, OnDestroy {
   categories$?: Observable<Category[]>;
 
   selectedCategories?: string[];
+  isImageSelectorVisible: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -92,6 +94,13 @@ export class EditBlogpostComponent implements OnInit, OnDestroy {
           },
         });
     }
+  }
+
+  openImageSelector(): void {
+    this.isImageSelectorVisible = true;
+  }
+  closeImageSelector(): void {
+    this.isImageSelectorVisible = false;
   }
   ngOnDestroy(): void {
     this.routeSubcription?.unsubscribe();
