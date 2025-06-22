@@ -1,25 +1,30 @@
 import { CategoryService } from './../../category/services/category.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AddBlogPost } from '../models/add-blog-post.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BlogPostService } from '../services/blog-post.service';
 import { Router } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Category } from '../../category/models/category-model.model';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { ImageSelectorComponent } from '../../../shared/components/image-selector/image-selector.component';
+import { ImageService } from '../../../shared/components/image-selector/image.service';
 
 @Component({
   selector: 'app-add-blogpost',
-  imports: [CommonModule, FormsModule, MarkdownModule,NgMultiSelectDropDownModule ],
+  imports: [CommonModule, FormsModule, MarkdownModule,NgMultiSelectDropDownModule, ImageSelectorComponent ],
   templateUrl: './add-blogpost.component.html',
   styleUrl: './add-blogpost.component.css'
 })
-export class AddBlogpostComponent implements OnInit {
+export class AddBlogpostComponent implements OnInit, OnDestroy {
 
   model: AddBlogPost;
-  categories$?: Observable<Category[]>
+  categories$?: Observable<Category[]>;
+  isImageSelectorVisible: boolean = false;
+
+  imageSelectorSubscription?: Subscription
 
   dropdownSettings = {
     singleSelection: false,
@@ -32,7 +37,7 @@ export class AddBlogpostComponent implements OnInit {
     bindValue: 'id'  ,
     bindLabel: 'name'
   };
-  constructor( private blogPostService: BlogPostService,private router: Router, private categoryService: CategoryService) {
+  constructor( private blogPostService: BlogPostService,private router: Router, private categoryService: CategoryService, private imageService: ImageService) {
     this.model = {
       title: '',
       shortDescription: '',
@@ -45,9 +50,16 @@ export class AddBlogpostComponent implements OnInit {
       categories: []
     };
   }
-  ngOnInit(): void {
-   this. categories$ = this.categoryService.getAllCategories();
 
+  ngOnInit(): void {
+   this.categories$ = this.categoryService.getAllCategories();
+
+   this.imageSelectorSubscription = this.imageService.onSelectedImage().subscribe({
+      next: (selectedImage) => {
+        this.model.featuredImageUrl = selectedImage.url;
+        this.closeImageSelector();
+      }
+    });
 
   }
 
@@ -64,4 +76,13 @@ export class AddBlogpostComponent implements OnInit {
 
   }
 
+  openImageSelector(): void {
+    this.isImageSelectorVisible = true;
+  }
+  closeImageSelector(): void {
+    this.isImageSelectorVisible = false;
+  }
+ ngOnDestroy(): void {
+    this.imageSelectorSubscription?.unsubscribe();
+  }
 }

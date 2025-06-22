@@ -7,7 +7,7 @@
       <div class="col-8 p-4" style="overflow-y: scroll">
         <ng-container *ngIf="images$ | async as images">
           <div class="d-flex flex-wrap">
-            <div *ngFor="let image of images">
+            <div *ngFor="let image of images" (click)="selectImage(image)">
               <div
                 style="
                   min-width: 100px;
