@@ -7,38 +7,43 @@ import { AddBlogpostComponent } from './features/blog-post/add-blogpost/add-blog
 import { EditBlogpostComponent } from './features/blog-post/edit-blogpost/edit-blogpost.component';
 import { HomeComponent } from './features/public/home/home.component';
 import { BlogDetailsComponent } from './features/public/blog-details/blog-details.component';
+import { LoginComponent } from './features/auth/login/login.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: HomeComponent,
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
   },
   {
     path: 'blog/:url',
-    component: BlogDetailsComponent
+    component: BlogDetailsComponent,
   },
   {
     path: 'admin/categories',
-    component: CategoryListComponent
+    component: CategoryListComponent,
   },
   {
     path: 'admin/categories/add',
-    component: AddCategoryComponent
+    component: AddCategoryComponent,
   },
   {
     path: 'admin/categories/:id',
-    component: EditCategoryComponent
+    component: EditCategoryComponent,
   },
   {
     path: 'admin/blogposts',
-    component: BlogpostListComponent
+    component: BlogpostListComponent,
   },
   {
     path: 'admin/blogposts/add',
-    component:AddBlogpostComponent
+    component: AddBlogpostComponent,
   },
   {
     path: 'admin/blogposts/:id',
-    component:EditBlogpostComponent
-  }
+    component: EditBlogpostComponent,
+  },
 ];
