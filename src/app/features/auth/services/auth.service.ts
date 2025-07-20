@@ -1,22 +1,37 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { LoginRequest } from '../models/login-request.model';
 import { LoginResponse } from '../models/login-response.model';
+import { User } from '../models/user.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  $user= new BehaviorSubject<User | undefined>(undefined);
 
-  login(request: LoginRequest): Observable<LoginResponse>{
-    return  this.http.post<LoginResponse>(`${environment.apiBaseUrl}/api/auth/login`, {
-      email: request.email,
-      password: request.password
-    });
+  constructor(private http: HttpClient) {}
 
+  login(request: LoginRequest): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(
+      `${environment.apiBaseUrl}/api/auth/login`,
+      {
+        email: request.email,
+        password: request.password,
+      }
+    );
+  }
+
+  setUser(user: User): void {
+
+    this.$user.next(user);
+    localStorage.setItem('user-email', user.email);
+    localStorage.setItem('user-roles', user.roles.join(','));
+  }
+  user(): Observable<User | undefined> {
+    return this.$user.asObservable();
   }
 }
