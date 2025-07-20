@@ -5,8 +5,7 @@
   </div>
 
 
-  <ng-container *ngIf="categories$ | async as categories">
-
+  @if (categories$ | async; as categories) {
     <table class="table table-bordered mt-3">
       <thead>
         <tr>
@@ -17,16 +16,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let category of categories">
-          <td>{{ category.id }}</td>
-          <td>{{ category.name }}</td>
-          <td>{{ category.urlHandle }}</td>
-          <td>
-            <a [routerLink]="['/admin/categories', category.id]" class="btn btn-light">Edit</a>
-          </td>
-        </tr>
+        @for (category of categories; track category) {
+          <tr>
+            <td>{{ category.id }}</td>
+            <td>{{ category.name }}</td>
+            <td>{{ category.urlHandle }}</td>
+            <td>
+              <a [routerLink]="['/admin/categories', category.id]" class="btn btn-light">Edit</a>
+            </td>
+          </tr>
+        }
       </tbody>
     </table>
-  </ng-container>
+  }
 
 </div>

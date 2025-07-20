@@ -4,12 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../models/category-model.model';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-category',
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './edit-category.component.html',
   styleUrl: './edit-category.component.css',
 })

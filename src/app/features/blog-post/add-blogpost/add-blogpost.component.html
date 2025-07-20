@@ -11,7 +11,7 @@
           class="form-control"
           name="title"
           [(ngModel)]="model.title"
-        />
+          />
       </div>
 
       <div class="mt-3">
@@ -22,7 +22,7 @@
           class="form-control"
           name="urlHandle"
           [(ngModel)]="model.urlHandle"
-        />
+          />
       </div>
 
       <div class="mt-3">
@@ -35,7 +35,7 @@
           class="form-control"
           name="shortDescription"
           [(ngModel)]="model.shortDescription"
-        />
+          />
       </div>
 
       <div class="mt-3">
@@ -60,20 +60,20 @@
 
       <div class="mt-3">
         <label for="featuredImageUrl" class="form-label"
-          >Featured Image Url</label>
-          <button type="button" class="btn btn-light" (click)="openImageSelector()">Select Image</button>
-          <ng-container *ngIf="model.featuredImageUrl !== ''">
-            <div>
-              <img [src]="model.featuredImageUrl"  height="100" class="my-2"/>
-            </div>
-          </ng-container>
+        >Featured Image Url</label>
+        <button type="button" class="btn btn-light" (click)="openImageSelector()">Select Image</button>
+        @if (model.featuredImageUrl !== '') {
+          <div>
+            <img [src]="model.featuredImageUrl"  height="100" class="my-2"/>
+          </div>
+        }
         <input
           type="text"
           id="featuredImageUrl "
           class="form-control"
           name="featuredImageUrl"
           [(ngModel)]="model.featuredImageUrl"
-        />
+          />
       </div>
 
       <div class="mt-3">
@@ -86,7 +86,7 @@
           value="{{ model.publishedDate }}"
           [ngModel]="model.publishedDate | date : 'yyyy-MM-dd'"
           (ngModelChange)="model.publishedDate = $event"
-        />
+          />
       </div>
       <div class="mt-3">
         <label for="author" class="form-label">Author</label>
@@ -96,7 +96,7 @@
           class="form-control"
           name="author"
           [(ngModel)]="model.author"
-        />
+          />
       </div>
 
       <div class="form-check mt-3">
@@ -107,20 +107,22 @@
           id="isVisible"
           name="isVisible"
           [(ngModel)]="model.isVisible"
-        />
+          />
         <label class="form-check-label" for="isVisible"> Is visible? </label>
       </div>
 
       <div class="mt-3">
         <label for="categories" class="form-label">Categories</label>
-        <ng-container *ngIf="categories$ | async as categories">
+        @if (categories$ | async; as categories) {
           <select
             [(ngModel)]="model.categories"
             id="categories"
             class="form-control"
             name="categories" multiple
-            > <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option> </select>
-        </ng-container>
+            > @for (category of categories; track category) {
+            <option [value]="category.id">{{category.name}}</option>
+          } </select>
+        }
       </div>
 
       <div class="mt-3">
