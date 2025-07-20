@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent {
   model: LoginRequest;
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private cookieService: CookieService) {
     this.model = { email: '', password: '' };
   }
 
@@ -25,10 +26,10 @@ export class LoginComponent {
     this.authService.login(this.model).subscribe({
       next: (response) =>{
         console.log('Login successful', response);
+        //Set Auth cookie
+        this.cookieService.set('Authorization', `Bearer ${response.token}`, undefined, '/', undefined, true, 'Strict');
       },
-      error: (error) => {
-        console.error('Login failed', error);
-      }
+
     });
   }
 

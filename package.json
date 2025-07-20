@@ -18,8 +18,10 @@
     "@angular/platform-browser": "^20.1.2",
     "@angular/platform-browser-dynamic": "^20.1.2",
     "@angular/router": "^20.1.2",
+    "marked": "^15.0.12",
     "ng-multiselect-dropdown": "^1.0.0",
-    "ngx-markdown": "^19.1.1",
+    "ngx-cookie-service": "^20.0.1",
+    "ngx-markdown": "^20.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
