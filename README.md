@@ -6,7 +6,7 @@
 
 This is the **Angular-based frontend** of the platform. It interfaces with the CodeJournal API and serves a clean, responsive UI with features like post rendering, comment threads, and category-based filtering.
 
-> 🔗 Paired with backend API: [CodeJournal.API](https://github.com/your-username/CodeJournal.API)
+> 🔗 Paired with backend API: [CodeJournal.API](https://github.com/kekgaugetswe/CodeJournal.API)
 
 ---
 
