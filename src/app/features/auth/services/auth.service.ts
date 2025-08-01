@@ -5,6 +5,7 @@ import { environment } from '../../../../environments/environment';
 import { LoginRequest } from '../models/login-request.model';
 import { LoginResponse } from '../models/login-response.model';
 import { User } from '../models/user.model';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class AuthService {
 
   $user= new BehaviorSubject<User | undefined>(undefined);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cookieService: CookieService) {}
 
   login(request: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(
@@ -33,5 +34,11 @@ export class AuthService {
   }
   user(): Observable<User | undefined> {
     return this.$user.asObservable();
+  }
+
+  logout():void {
+    localStorage.clear();
+    this.cookieService.delete('Authorization', '/');
+    this.$user.next(undefined);
   }
 }
