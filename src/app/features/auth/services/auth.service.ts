@@ -18,7 +18,7 @@ export class AuthService {
 
   login(request: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(
-      `${environment.apiBaseUrl}/api/auth/login`,
+      `${environment.apiBaseUrl}/api/auth/login?addAuth=true`,
       {
         email: request.email,
         password: request.password,
