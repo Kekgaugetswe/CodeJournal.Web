@@ -2,8 +2,10 @@
   <h1 class="mt-3">Category List</h1>
   <div class="d-flex justify-content-between mt-3">
     <div class="d-flex">
-      <input type="text" class="form-control"  #queryText/>
-      <button class="btn btn-warning ms-3" (click)="onSearch(queryText.value)">Search</button>
+      <input type="text" class="form-control" #queryText />
+      <button class="btn btn-warning ms-3" (click)="(queryText.value)">
+        Search
+      </button>
     </div>
     <a class="btn btn-primary" [routerLink]="['/admin/categories/add']"
       >Add Category</a
@@ -15,7 +17,22 @@
     <thead>
       <tr>
         <th>Id</th>
-        <th>Name</th>
+        <th>
+          Name
+          <span>
+            <span
+              ><button type="button" class="btn btn-light" (click)="sort('name', 'asc')">
+                <i class="bi bi-arrow-up"></i>
+              </button>
+            </span>
+            <span>
+              <button type="button" class="btn btn-light" (click)="sort('name', 'desc')">
+                <i class="bi bi-arrow-down"></i>
+              </button>
+
+            </span>
+          </span>
+        </th>
         <th>Url Handle</th>
         <th></th>
       </tr>

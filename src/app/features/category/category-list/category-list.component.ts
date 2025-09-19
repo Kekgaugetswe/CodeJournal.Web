@@ -24,4 +24,9 @@ export class CategoryListComponent implements OnInit {
 
 
   }
+
+  sort(sortBy: string, sortDirection: string){
+
+    this.categories$ = this.categoryService.getAllCategories(undefined,sortBy,sortDirection)
+  }
 }
