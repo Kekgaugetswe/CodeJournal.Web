@@ -21,15 +21,22 @@
           Name
           <span>
             <span
-              ><button type="button" class="btn btn-light" (click)="sort('name', 'asc')">
+              ><button
+                type="button"
+                class="btn btn-light"
+                (click)="sort('name', 'asc')"
+              >
                 <i class="bi bi-arrow-up"></i>
               </button>
             </span>
             <span>
-              <button type="button" class="btn btn-light" (click)="sort('name', 'desc')">
+              <button
+                type="button"
+                class="btn btn-light"
+                (click)="sort('name', 'desc')"
+              >
                 <i class="bi bi-arrow-down"></i>
               </button>
-
             </span>
           </span>
         </th>
@@ -54,5 +61,19 @@
       }
     </tbody>
   </table>
+
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" (click)="getPreviousPage()">Previous</a></li>
+
+      @for (item of list; track $index; let index = $index) {
+      <li class="page-item">
+        <a class="page-link" (click)="getPage(index+1)">{{ index + 1 }}</a>
+      </li>
+      }
+
+      <li class="page-item"><a class="page-link" (click)="getNextPage()">Next</a></li>
+    </ul>
+  </nav>
   }
 </div>
