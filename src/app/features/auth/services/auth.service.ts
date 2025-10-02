@@ -11,8 +11,7 @@ import { CookieService } from 'ngx-cookie-service';
   providedIn: 'root',
 })
 export class AuthService {
-
-  $user= new BehaviorSubject<User | undefined>(undefined);
+  $user = new BehaviorSubject<User | undefined>(undefined);
 
   constructor(private http: HttpClient, private cookieService: CookieService) {}
 
@@ -27,10 +26,10 @@ export class AuthService {
   }
 
   setUser(user: User): void {
-
     this.$user.next(user);
     localStorage.setItem('user-email', user.email);
     localStorage.setItem('user-roles', user.roles.join(','));
+    localStorage.setItem('user-id', user.userId);
   }
   user(): Observable<User | undefined> {
     return this.$user.asObservable();
@@ -39,12 +38,14 @@ export class AuthService {
   getUser(): User | undefined {
     const email = localStorage.getItem('user-email');
     const roles = localStorage.getItem('user-roles');
+    const userId = localStorage.getItem('user-id');
 
-    if(email && roles){
-      const user : User = {
+    if (email && roles && userId) {
+      const user: User = {
+        userId: userId,
         email: email,
-        roles: roles.split(',')
-      }
+        roles: roles.split(','),
+      };
 
       return user;
     }
@@ -52,7 +53,7 @@ export class AuthService {
     return undefined;
   }
 
-  logout():void {
+  logout(): void {
     localStorage.clear();
     this.cookieService.delete('Authorization', '/');
     this.$user.next(undefined);

@@ -34,6 +34,7 @@ export class LoginComponent {
         this.authService.setUser({
           email: response.email,
           roles: response.roles,
+          userId: response.userId
         });
 
         // redirect back to the home page
