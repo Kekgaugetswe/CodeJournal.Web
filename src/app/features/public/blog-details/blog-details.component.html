@@ -14,10 +14,15 @@
       >
     </div>
     <div class="mb-3">
-      <span
-        ><i  id="btnLike" class="bi bi-hand-thumbs-up" style="cursor: pointer"(onlick)="onLike()"></i>
-        {{ blogPost.totalLikes }}</span
-      >
+      <span>
+        <i
+          id="btnLike"
+          class="bi bi-hand-thumbs-up"
+          style="cursor: pointer"
+          (click)="onLike(blogPost)"
+        ></i>
+        {{ blogPost.totalLikes }}
+      </span>
     </div>
     @if (blogPost.categories) {
     <div class="mt-4">

@@ -11,6 +11,6 @@ export class BlogPostLikeService {
   constructor(private httpClient: HttpClient){}
 
   addBlogPostLike(data: AddBlogPostLike): Observable<any> {
-    return this.httpClient.post(`${environment.apiBaseUrl}/Add?addAuth=true`, data);
+    return this.httpClient.post(`${environment.apiBaseUrl}/api/BlogPostLike/Add?addAuth=true`, data);
   }
 }
