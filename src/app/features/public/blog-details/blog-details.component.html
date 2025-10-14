@@ -17,7 +17,7 @@
       <span>
         <i
           id="btnLike"
-          class="bi bi-hand-thumbs-up"
+          [ngClass]="blogPost.liked ? 'bi bi-hand-thumbs-up-fill text-primary' : 'bi bi-hand-thumbs-up'"
           style="cursor: pointer"
           (click)="onLike(blogPost)"
         ></i>

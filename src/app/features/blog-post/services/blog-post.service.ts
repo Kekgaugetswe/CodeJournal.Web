@@ -29,9 +29,10 @@ export class BlogPostService {
     );
   }
 
-   getBlogPostByUrlHandle(urlHandle: string): Observable<BlogPost> {
+   getBlogPostByUrlHandle(urlHandle: string, userId?: string): Observable<BlogPost> {
+    const userParam = userId ? `?userId=${userId}` : '';
     return this.http.get<BlogPost>(
-      `${environment.apiBaseUrl}/api/blogpost/${urlHandle}`
+      `${environment.apiBaseUrl}/api/blogpost/${urlHandle}${userParam}`
     );
   }
 

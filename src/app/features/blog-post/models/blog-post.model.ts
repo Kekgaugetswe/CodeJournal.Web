@@ -12,4 +12,5 @@ export interface BlogPost{
   isVisible: boolean;
   categories: Category[];
   totalLikes: number;
+  liked: boolean;
 }

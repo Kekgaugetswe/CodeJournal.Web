@@ -3,7 +3,7 @@ import { BlogPostLikeService } from './../../blog-post/services/blog-post-like.s
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BlogPostService } from '../../blog-post/services/blog-post.service';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { BlogPost } from '../../blog-post/models/blog-post.model';
 import { CommonModule } from '@angular/common';
 import { MarkdownModule } from 'ngx-markdown';
@@ -18,7 +18,7 @@ export class BlogDetailsComponent implements OnInit {
   url: string | null = null;
   blogPost$?: Observable<BlogPost>;
 
-  liked = false;
+  isLiked = false;
   likeCount = 0;
 
   constructor(
@@ -31,6 +31,9 @@ export class BlogDetailsComponent implements OnInit {
     this.route.paramMap.subscribe({
       next: (params) => {
         this.url = params.get('url');
+        if (this.url) {
+          this.loadPost(this.url);
+        }
       },
     });
 
@@ -41,31 +44,44 @@ export class BlogDetailsComponent implements OnInit {
   }
 
   private loadPost(urlHandle: string) {
-    this.blogPost$ = this.blogPostService.getBlogPostByUrlHandle(urlHandle);
-    this.blogPost$.subscribe((post) => {
-      this.likeCount = post.totalLikes ?? 0;
-    });
+    const currentUser = this.authService.getUser();
+    const userId = currentUser ? currentUser.userId : undefined;
+    this.blogPost$ = this.blogPostService
+      .getBlogPostByUrlHandle(urlHandle, userId)
+      .pipe(
+        tap((post) => {
+          this.isLiked = post.liked ?? false; // ensure set before async pipe emits
+        })
+      );
   }
   onLike(post: BlogPost): void {
-    const currentUser = this.authService.getUser();
+  const currentUser = this.authService.getUser();
 
-    if (!currentUser) {
-      alert('User not logged in');
-      return;
-    }
-    if (!this.blogPost$) return;
-    this.blogPost$.subscribe((post) => {
-      this.blogPostLikeService
-        .addBlogPostLike({ BlogPostId: post.id, UserId: currentUser.userId })
-        .subscribe({
-          next: () => {
-            if (this.url) {
-              this.blogPost$ = this.blogPostService.getBlogPostByUrlHandle(
-                this.url
-              );
-            }
+  if (!currentUser) {
+    alert('User not logged in');
+    return;
+  }
+
+  if (post.liked) return;
+
+  // instantly mark liked for UI
+  post.liked = true;
+
+  // persist like in backend
+  this.blogPostLikeService
+    .addBlogPostLike({ BlogPostId: post.id, UserId: currentUser.userId })
+    .subscribe({
+      next: () => {
+        // fetch new total likes
+        this.blogPostLikeService.getTotalLikes(post.id).subscribe({
+          next: (count) => {
+            post.totalLikes = count; // ✅ update bound value directly
           },
         });
+      },
+      error: () => {
+        post.liked = false;
+      },
     });
-  }
+}
 }

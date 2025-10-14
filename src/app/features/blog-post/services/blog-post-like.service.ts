@@ -13,4 +13,8 @@ export class BlogPostLikeService {
   addBlogPostLike(data: AddBlogPostLike): Observable<any> {
     return this.httpClient.post(`${environment.apiBaseUrl}/api/BlogPostLike/Add?addAuth=true`, data);
   }
+
+  getTotalLikes(blogPostId: string): Observable<any>{
+    return this.httpClient.get(`${environment.apiBaseUrl}/api/BlogPostLike/${blogPostId}/totalLikes`);
+  }
 }
