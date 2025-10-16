@@ -17,7 +17,11 @@
       <span>
         <i
           id="btnLike"
-          [ngClass]="blogPost.liked ? 'bi bi-hand-thumbs-up-fill text-primary' : 'bi bi-hand-thumbs-up'"
+          [ngClass]="
+            blogPost.liked
+              ? 'bi bi-hand-thumbs-up-fill text-primary'
+              : 'bi bi-hand-thumbs-up'
+          "
           style="cursor: pointer"
           (click)="onLike(blogPost)"
         ></i>
@@ -35,6 +39,28 @@
     }
     <div class="mt-4 blog-content">
       <markdown [data]="blogPost.content"> </markdown>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h5>Comments</h5>
+        <!-- if loggedin -->
+        <form (ngSubmit)="onSubmitComment()">
+          <div class="mb-3">
+            <label class="form-label">Comment Description</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="commentDescription"
+              name="commentDescription"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <button type="submit" class="btn btn-dark">Add Comment</button>
+          </div>
+        </form>
+      </div>
+      <div class="card-body"></div>
     </div>
   </div>
 </div>
