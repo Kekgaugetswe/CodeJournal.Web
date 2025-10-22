@@ -60,7 +60,33 @@
           </div>
         </form>
       </div>
-      <div class="card-body"></div>
+      <div class="card-body">
+        @if (blogPostComments$ | async; as comments) {
+        <!-- <h3>Comments ({{ comments.length }})</h3> -->
+
+        @for (comment of comments; track comment) {
+        <!-- <div class="comment">
+          <strong>{{ comment.userName }}</strong>
+          <p>{{ comment.description }}</p>
+          <small>{{ comment.dateAdded | date : "short" }}</small>
+        </div> -->
+        <div class="card mb-3">
+          <div class="card-body">
+            <div >
+              {{comment.description}}
+            </div>
+            <div class="d-flex justify-content-between">
+              <span class="text-secondary">{{comment.userName}}</span>
+              <span class="text-secondary">{{comment.dateAdded | date: "medium"}}</span>
+
+            </div>
+          </div>
+        </div>
+        }
+      } @else {
+        <p>Loading comments...</p>
+        }
+      </div>
     </div>
   </div>
 </div>

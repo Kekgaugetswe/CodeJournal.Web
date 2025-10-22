@@ -10,6 +10,7 @@ import { MarkdownModule } from 'ngx-markdown';
 import { BlogPostCommentService } from '../../blog-post/services/blog-post-comment.service';
 import { AddBlogPostComponent } from '../../blog-post/models/add-blog-post-comment';
 import { FormsModule } from '@angular/forms';
+import { BlogComment } from '../../blog-post/models/blog-comment';
 
 @Component({
   selector: 'app-blog-details',
@@ -20,6 +21,7 @@ import { FormsModule } from '@angular/forms';
 export class BlogDetailsComponent implements OnInit {
   url: string | null = null;
   blogPost$?: Observable<BlogPost>;
+  blogPostComments$?: Observable<BlogComment[]>;
   commentDescription: string = '';
   blogPostId?: string;
 
@@ -58,6 +60,7 @@ export class BlogDetailsComponent implements OnInit {
         tap((post) => {
           this.isLiked = post.liked ?? false; // ensure set before async pipe emits
           this.blogPostId = post.id
+          this.blogPostComments$ = this.blogPostCommentService.getComments(post.id)
         })
       );
   }
@@ -109,6 +112,8 @@ export class BlogDetailsComponent implements OnInit {
       next: (response) => {
         console.log('comment added', response);
         this.commentDescription = '';
+
+        this.blogPostComments$ = this.blogPostCommentService.getComments(this.blogPostId!);
       },
       error: (err)=> console.error(err)
     });
