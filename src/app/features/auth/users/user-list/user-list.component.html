@@ -23,6 +23,7 @@
           <th>Id</th>
           <th>Username</th>
           <th>Email</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -31,6 +32,9 @@
           <td>{{ user.id }}</td>
           <td>{{ user.userName }}</td>
           <td>{{ user.email }}</td>
+          <td>
+            <a class="btn btn-danger user-delete-btn"  (click)="onDelete(user.id)" >Delete</a>
+          </td>
         </tr>
         }
       </tbody>
@@ -102,7 +106,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        <button type="button" #closebutton class="btn btn-secondary" data-bs-dismiss="modal">
           Close
         </button>
         <button type="submit" class="btn btn-primary btn-dark" #closebutton>Save changes</button>

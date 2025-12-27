@@ -54,6 +54,23 @@ export class UserListComponent implements OnInit, OnDestroy {
       });
   }
 
+  onDelete(id: string){
+    const ok = confirm('are you sure you want to delete this user');
+    if(!ok) return;
+
+    this.userService.deleteUser(id).subscribe({
+      next: () => {
+        this.user$ = this.userService.getAllUsers();
+
+      },
+      error: (err)=> {
+        console.error('delete failed', err);
+        alert('Delete failed. check console/logs.');
+      }
+    });
+  }
+
+
   ngOnDestroy(): void {
     this.addUserSubscription?.unsubscribe();
   }

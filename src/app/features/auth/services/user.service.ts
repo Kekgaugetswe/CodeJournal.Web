@@ -20,4 +20,8 @@ export class UserService {
       `${environment.apiBaseUrl}/api/user/add?addAuth=true`,model
     );
   }
+
+  deleteUser(id: string): Observable<void> {
+    return this.http.delete<void>(`${environment.apiBaseUrl}/api/user/delete/${id}?addAuth=true`);
+  }
 }
