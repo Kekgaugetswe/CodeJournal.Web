@@ -28,7 +28,6 @@ jobs:
           - name: build and push docker image to DockerHub
             uses: docker/build-push-action@v5
             with:
-              context: ./LGSETA.Host
               file: Dockerfile
               push: true
               tags: kekgaugetswe/codejournal-web:codejournal-web
