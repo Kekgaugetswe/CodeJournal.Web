@@ -13,16 +13,48 @@ import { CookieService } from 'ngx-cookie-service';
 export class AuthService {
   $user = new BehaviorSubject<User | undefined>(undefined);
 
-  constructor(private http: HttpClient, private cookieService: CookieService) {}
+  constructor(private http: HttpClient, private cookieService: CookieService) {
+    // Hydrate in-memory user state after refresh/navigation
+    const existing = this.getUser();
+    if (existing) {
+      this.$user.next(existing);
+    }
+  }
 
   login(request: LoginRequest): Observable<LoginResponse> {
+    // Login must be unauthenticated; do not include addAuth=true here.
     return this.http.post<LoginResponse>(
-      `${environment.apiBaseUrl}/api/auth/login?addAuth=true`,
+      `${environment.apiBaseUrl}/api/auth/login`,
       {
         email: request.email,
         password: request.password,
       }
     );
+  }
+
+  /**
+   * Call this once after a successful login response.
+   * - Persists JWT in cookie as: Authorization=Bearer <token>
+   * - Persists user metadata in localStorage
+   */
+  setSession(response: LoginResponse): void {
+    const bearer = response.token?.startsWith('Bearer ')
+      ? response.token
+      : `Bearer ${response.token}`;
+
+    // Store token for interceptor/guard
+    this.cookieService.set('Authorization', bearer, undefined, '/');
+
+    // Persist user
+    this.setUser({
+      email: response.email,
+      roles: response.roles,
+      userId: response.userId,
+    });
+  }
+
+  getToken(): string {
+    return this.cookieService.get('Authorization');
   }
 
   setUser(user: User): void {
