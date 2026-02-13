@@ -27,8 +27,18 @@ export class LoginComponent {
     this.authService.login(this.model).subscribe({
       next: (response) =>{
         console.log('Login successful', response);
-        //Set Auth cookie
-        this.cookieService.set('Authorization', `Bearer ${response.token}`, undefined, '/', undefined, true, 'Strict');
+        // Set Auth cookie
+        // NOTE: On the VM you are serving over HTTP, so `secure` MUST be false or the cookie won't be stored/sent.
+        // When you later move to HTTPS, switch `secure` to true and consider `SameSite=None` if needed.
+        this.cookieService.set(
+          'Authorization',
+          `Bearer ${response.token}`,
+          undefined,
+          '/',
+          undefined,
+          false,
+          'Lax'
+        );
 
         // Set user
         this.authService.setUser({
