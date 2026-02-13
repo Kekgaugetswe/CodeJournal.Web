@@ -2,7 +2,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 export const authGuard: CanActivateFn = (route, state) => {
   //check for the JWT token
@@ -13,7 +13,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   const user = authService.getUser()
   let token = cookieService.get('Authorization');
   if (token && user) {
-    token = token.replace('Bearer', '');
+    token = token.replace(/^Bearer\s+/i, '');
     const decodedToken: any = jwtDecode(token);
 
     const experiationDate = (decodedToken.exp * 1000);
@@ -31,7 +31,6 @@ export const authGuard: CanActivateFn = (route, state) => {
           alert('Aunthorized');
           return false;
         }
-
     }
   } else {
     authService.logout();
