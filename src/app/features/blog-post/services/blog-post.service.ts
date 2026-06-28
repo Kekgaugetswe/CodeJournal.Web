@@ -1,10 +1,17 @@
 import { UpdateBlogPost } from './../models/update-blog-post.model';
 import { BlogPost } from './../models/blog-post.model';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AddBlogPost } from './../models/add-blog-post.model';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
+import { ApiResponse, PaginationMetadata } from '../../../shared/models/api-response.model';
+
+export interface PagedBlogPostResult {
+  data: BlogPost[];
+  pagination: PaginationMetadata;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +28,39 @@ export class BlogPostService {
 
   getAllBlogPosts(): Observable<BlogPost[]> {
     return this.http.get<BlogPost[]>(`${environment.apiBaseUrl}/api/blogpost`);
+  }
+
+  getPagedBlogPosts(
+    pageNumber: number,
+    pageSize: number,
+    title?: string,
+    categoryId?: string
+  ): Observable<PagedBlogPostResult> {
+    let params = new HttpParams()
+      .set('pageNumber', pageNumber.toString())
+      .set('pageSize', pageSize.toString());
+
+    if (title && title.trim().length > 0) {
+      params = params.set('title', title.trim());
+    }
+
+    if (categoryId && categoryId.trim().length > 0) {
+      params = params.set('categoryId', categoryId.trim());
+    }
+
+    return this.http
+      .get<ApiResponse<BlogPost[]>>(`${environment.apiBaseUrl}/api/blogpost`, { params })
+      .pipe(
+        map((response) => {
+          if (!response.success) {
+            throw new Error(response.message);
+          }
+          return {
+            data: response.data,
+            pagination: response.pagination!,
+          };
+        })
+      );
   }
 
   getBlogPostById(id: string): Observable<BlogPost> {

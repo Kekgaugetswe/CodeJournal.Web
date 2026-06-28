@@ -1,0 +1,9 @@
+/* Pagination component styles */
+/* Bootstrap handles core pagination styling via classes: */
+/* pagination, page-item, page-link, active, disabled */
+/* Only component-specific overrides below */
+
+:host {
+  display: block;
+  margin-top: 1.5rem;
+}

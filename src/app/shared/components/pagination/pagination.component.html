@@ -1,0 +1,24 @@
+<nav aria-label="Page navigation" *ngIf="totalPages > 1">
+  <ul class="pagination justify-content-center">
+    <li class="page-item" [class.disabled]="isPreviousDisabled">
+      <button class="page-link" (click)="previousPage()" [disabled]="isPreviousDisabled" aria-label="Previous page">
+        Previous
+      </button>
+    </li>
+    @for (page of pageNumbers; track page) {
+      <li class="page-item" [class.active]="page === currentPage">
+        <button class="page-link" (click)="goToPage(page)" [attr.aria-current]="page === currentPage ? 'page' : null">
+          {{ page }}
+        </button>
+      </li>
+    }
+    <li class="page-item" [class.disabled]="isNextDisabled">
+      <button class="page-link" (click)="nextPage()" [disabled]="isNextDisabled" aria-label="Next page">
+        Next
+      </button>
+    </li>
+  </ul>
+  <p class="text-center text-muted small">
+    Page {{ currentPage }} of {{ totalPages }} ({{ totalCount }} total posts)
+  </p>
+</nav>
