@@ -29,6 +29,13 @@ export class AuthService {
     );
   }
 
+  register(request: { firstName: string; lastName: string; email: string; password: string }): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(
+      `${environment.apiBaseUrl}/api/auth/register`,
+      request
+    );
+  }
+
   storeTokens(accessToken: string, refreshToken: string): void {
     localStorage.setItem('access-token', accessToken);
     localStorage.setItem('refresh-token', refreshToken);
@@ -97,6 +104,34 @@ export class AuthService {
     } else {
       this.clearStorage();
     }
+  }
+
+  confirmEmail(email: string, token: string): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(
+      `${environment.apiBaseUrl}/api/auth/confirm-email`,
+      { email, token }
+    );
+  }
+
+  resendConfirmationEmail(email: string): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(
+      `${environment.apiBaseUrl}/api/auth/resend-confirmation-email`,
+      { email }
+    );
+  }
+
+  forgotPassword(email: string): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(
+      `${environment.apiBaseUrl}/api/auth/forgot-password`,
+      { email }
+    );
+  }
+
+  resetPassword(email: string, token: string, newPassword: string): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(
+      `${environment.apiBaseUrl}/api/auth/reset-password`,
+      { email, token, newPassword }
+    );
   }
 
   private clearStorage(): void {

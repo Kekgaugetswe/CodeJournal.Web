@@ -8,6 +8,10 @@ import { EditBlogpostComponent } from './features/blog-post/edit-blogpost/edit-b
 import { HomeComponent } from './features/public/home/home.component';
 import { BlogDetailsComponent } from './features/public/blog-details/blog-details.component';
 import { LoginComponent } from './features/auth/login/login.component';
+import { RegisterComponent } from './features/auth/register/register.component';
+import { ConfirmEmailComponent } from './features/auth/confirm-email/confirm-email.component';
+import { ForgotPasswordComponent } from './features/auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './features/auth/reset-password/reset-password.component';
 import { authGuard } from './features/auth/guards/auth.guard';
 import { UserListComponent } from './features/auth/users/user-list/user-list.component';
 
@@ -19,6 +23,22 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+  },
+  {
+    path: 'confirm-email',
+    component: ConfirmEmailComponent,
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
+  },
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent,
   },
   {
     path: 'blog/:url',
