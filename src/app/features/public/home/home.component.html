@@ -1,14 +1,37 @@
-<div class="container blog-page">
-  <!-- Header -->
-  <div class="blog-header mb-4">
-    <span class="text-muted small">Blogs</span>
-    <h1 class="blog-title">Build Better Products with Insights & Inspiration.</h1>
-    <p class="text-muted">Practical insights and real stories to guide your product from vision to reality.</p>
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <span class="hero-badge">BLOGS & INSIGHTS</span>
+        <h1 class="hero-title">
+          Build Better Products<br/>
+          with <span class="text-accent">Insights & Inspiration.</span>
+        </h1>
+        <p class="hero-subtitle">
+          Practical insights and real stories to guide your product from vision to reality.
+        </p>
+        <div class="hero-actions">
+          <a href="#blogs" class="btn btn-explore">
+            Explore Articles
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="ms-1" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+            </svg>
+          </a>
+          <a href="#categories" class="btn btn-categories">View Categories</a>
+        </div>
+      </div>
+      <div class="col-lg-6 d-none d-lg-block">
+        <img src="images/horo-image.png" alt="Hero illustration" class="hero-image" />
+      </div>
+    </div>
   </div>
+</section>
 
-  <!-- Filter Bar: Category Pills + Search -->
-  <div class="filter-bar d-flex flex-wrap align-items-center justify-content-between mb-4">
-    <!-- Tag Pills -->
+<!-- Filter Section -->
+<section class="container content-section" id="blogs">
+  <!-- Category Pills -->
+  <div id="categories" class="filter-bar d-flex flex-wrap align-items-center justify-content-between mb-4">
     <div class="d-flex flex-wrap align-items-center gap-2" role="group" aria-label="Filter by tag">
       <button
         type="button"
@@ -28,13 +51,16 @@
         <span class="text-muted small fst-italic">No categories available — add categories in admin</span>
       }
     </div>
+  </div>
 
-    <!-- Search -->
+  <!-- Search + Sort Row -->
+  <div class="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-3">
     <form (ngSubmit)="onSearch()" class="search-form">
       <div class="input-group">
         <span class="input-group-text bg-white border-end-0">
-          <i class="bi bi-search text-muted"></i>
-          <span class="visually-hidden">Search</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#9ca3af" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+          </svg>
         </span>
         <input
           type="text"
@@ -46,6 +72,12 @@
         />
       </div>
     </form>
+
+    <select class="form-select sort-select" aria-label="Sort articles">
+      <option selected>Latest</option>
+      <option>Oldest</option>
+      <option>Popular</option>
+    </select>
   </div>
 
   <!-- Loading State -->
@@ -76,7 +108,7 @@
         }
       </div>
     } @else {
-      <!-- Blog Post Grid - 4 columns -->
+      <!-- Blog Post Grid -->
       <div class="row">
         @for (blog of blogs; track blog.id) {
           <div class="col-12 col-sm-6 col-lg-3 mb-4">
@@ -84,18 +116,27 @@
               <div class="blog-card">
                 <div class="card-img-wrapper">
                   <img [src]="blog.featuredImageUrl" class="card-img" [alt]="blog.title" />
+                  @if (blog.categories && blog.categories.length > 0) {
+                    <span class="card-category-overlay">{{ blog.categories[0].name }}</span>
+                  }
                 </div>
                 <div class="card-content">
                   <div class="card-meta">
                     <span class="card-date">{{ blog.publishedDate | date:'MMMM dd, yyyy' }}</span>
-                    @if (blog.categories && blog.categories.length > 0) {
-                      <span class="card-category-badge">{{ blog.categories[0].name }}</span>
-                    }
+                    <span class="card-read-time">· 5 min read</span>
                   </div>
                   <h3 class="card-title">{{ blog.title }}</h3>
                   <p class="card-description">{{ blog.shortDescription }}</p>
                   <div class="card-footer-row">
-                    <span class="card-author">{{ blog.author }}</span>
+                    <div class="card-author-info">
+                      <div class="author-avatar">{{ blog.author?.charAt(0)?.toUpperCase() }}</div>
+                      <span class="card-author">{{ blog.author }}</span>
+                    </div>
+                    <button class="btn-bookmark" aria-label="Bookmark">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+                      </svg>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -104,13 +145,17 @@
         }
       </div>
 
-      <!-- Pagination -->
-      <app-pagination
-        [currentPage]="pagination?.pageNumber ?? 1"
-        [totalPages]="pagination?.totalPages ?? 0"
-        [totalCount]="pagination?.totalCount ?? 0"
-        (pageChange)="onPageChange($event)">
-      </app-pagination>
+      <!-- Newsletter + Pagination -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <app-pagination
+            [currentPage]="pagination?.pageNumber ?? 1"
+            [totalPages]="pagination?.totalPages ?? 0"
+            [totalCount]="pagination?.totalCount ?? 0"
+            (pageChange)="onPageChange($event)">
+          </app-pagination>
+        </div>
+      </div>
     }
   }
-</div>
+</section>

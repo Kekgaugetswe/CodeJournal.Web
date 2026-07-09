@@ -4,10 +4,11 @@ import { CategoryService } from '../services/category.service';
 import { Category } from '../models/category-model.model';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 
 @Component({
   selector: 'app-category-list',
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, PaginationComponent],
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.css',
 })
@@ -16,7 +17,7 @@ export class CategoryListComponent implements OnInit {
   totalCount?: number;
   list: number[] = [];
   pageNumber = 1;
-  pageSize = 2;
+  pageSize = 10;
   constructor(private readonly categoryService: CategoryService) {}
   ngOnInit(): void {
     this.categoryService.getCategoryCount().subscribe({
@@ -45,6 +46,10 @@ export class CategoryListComponent implements OnInit {
       sortBy,
       sortDirection
     );
+  }
+
+  onPageChange(page: number) {
+    this.getPage(page);
   }
 
   getPage(pageNumber: number) {

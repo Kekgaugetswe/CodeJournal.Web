@@ -1,0 +1,48 @@
+.page-header {
+  background: var(--color-bg-subtle);
+  border-bottom: 1px solid var(--color-border);
+  padding: 1.25rem 0;
+}
+
+.page-header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.table-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.table {
+  margin: 0;
+}
+
+.table thead th {
+  background: var(--color-bg-subtle);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.875rem 1rem;
+}
+
+.table tbody td {
+  padding: 0.875rem 1rem;
+  vertical-align: middle;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background: #fafafa;
+}

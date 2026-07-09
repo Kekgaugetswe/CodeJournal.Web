@@ -1,3 +1,199 @@
+/* ============================
+   Global Theme & Design System
+   ============================ */
+
+:root {
+  --color-primary: #4f46e5;
+  --color-primary-hover: #4338ca;
+  --color-primary-light: #eef2ff;
+  --color-danger: #ef4444;
+  --color-danger-hover: #dc2626;
+  --color-text: #1a1a2e;
+  --color-text-muted: #6b7280;
+  --color-border: #e5e7eb;
+  --color-bg: #ffffff;
+  --color-bg-subtle: #f9fafb;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 9999px;
+}
+
+/* Override Bootstrap primary */
+.btn-primary {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  border-radius: var(--radius-pill);
+  font-weight: 500;
+  padding: 0.5rem 1.25rem;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--color-primary-hover) !important;
+  border-color: var(--color-primary-hover) !important;
+}
+
+.btn-outline-primary {
+  color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  border-radius: var(--radius-pill);
+  font-weight: 500;
+  padding: 0.5rem 1.25rem;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: #fff !important;
+}
+
+.btn-danger {
+  background-color: var(--color-danger) !important;
+  border-color: var(--color-danger) !important;
+  border-radius: var(--radius-pill);
+}
+
+.btn-danger:hover {
+  background-color: var(--color-danger-hover) !important;
+  border-color: var(--color-danger-hover) !important;
+}
+
+/* Form controls consistent styling */
+.form-control {
+  border-radius: var(--radius-md);
+  border-color: var(--color-border);
+  font-size: 0.9rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.form-control:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 0.2rem rgba(79, 70, 229, 0.15);
+}
+
+.form-select {
+  border-radius: var(--radius-md);
+  border-color: var(--color-border);
+  font-size: 0.9rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.form-select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 0.2rem rgba(79, 70, 229, 0.15);
+}
+
+.input-group .form-control {
+  border-radius: 0;
+}
+
+.input-group .form-control:first-child,
+.input-group > :first-child {
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
+}
+
+.input-group .btn:last-child,
+.input-group > :last-child {
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+/* Alert styling */
+.alert-danger {
+  background-color: #fef2f2;
+  border-color: #fecaca;
+  color: #991b1b;
+  border-radius: var(--radius-md);
+}
+
+.alert-success {
+  background-color: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #166534;
+  border-radius: var(--radius-md);
+}
+
+.alert-info {
+  background-color: var(--color-primary-light);
+  border-color: #c7d2fe;
+  color: #3730a3;
+  border-radius: var(--radius-md);
+}
+
+/* Links */
+a {
+  color: var(--color-primary);
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+}
+
+/* Body defaults */
+body {
+  color: var(--color-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* ============================
+   Shared Page Header (admin pages)
+   ============================ */
+
+.page-header {
+  background: var(--color-bg-subtle);
+  border-bottom: 1px solid var(--color-border);
+  padding: 1.25rem 0;
+}
+
+.page-header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+/* Shared admin table card */
+.table-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.table-card .table {
+  margin: 0;
+}
+
+.table-card .table thead th {
+  background: var(--color-bg-subtle);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.875rem 1rem;
+}
+
+.table-card .table tbody td {
+  padding: 0.875rem 1rem;
+  vertical-align: middle;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.table-card .table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table-card .table tbody tr:hover {
+  background: #fafafa;
+}
+
+/* ============================
+   Existing Styles
+   ============================ */
+
 /* You can add global styles to this file, and also import other style files */
 .images-container-modal{
   width: 100%;

@@ -17,11 +17,37 @@ export class UserService {
 
   addUser(model: AddUser): Observable<void> {
     return this.http.post<void>(
-      `${environment.apiBaseUrl}/api/user/add?addAuth=true`,model
+      `${environment.apiBaseUrl}/api/user/add?addAuth=true`, model
     );
   }
 
   deleteUser(id: string): Observable<void> {
     return this.http.delete<void>(`${environment.apiBaseUrl}/api/user/delete/${id}?addAuth=true`);
+  }
+
+  getUserRoles(userIdOrEmail: string): Observable<{ id: string; email: string; roles: string[] }> {
+    return this.http.get<{ id: string; email: string; roles: string[] }>(
+      `${environment.apiBaseUrl}/api/roles/user/${encodeURIComponent(userIdOrEmail)}?addAuth=true`
+    );
+  }
+
+  getAllRoles(): Observable<{ id: string; name: string }[]> {
+    return this.http.get<{ id: string; name: string }[]>(
+      `${environment.apiBaseUrl}/api/roles?addAuth=true`
+    );
+  }
+
+  assignRole(userIdOrEmail: string, roleName: string): Observable<any> {
+    return this.http.post(
+      `${environment.apiBaseUrl}/api/roles/assign?addAuth=true`,
+      { userIdOrEmail, roleName }
+    );
+  }
+
+  removeRole(userIdOrEmail: string, roleName: string): Observable<any> {
+    return this.http.post(
+      `${environment.apiBaseUrl}/api/roles/remove?addAuth=true`,
+      { userIdOrEmail, roleName }
+    );
   }
 }

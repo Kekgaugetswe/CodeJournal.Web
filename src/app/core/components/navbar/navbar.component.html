@@ -1,25 +1,37 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
   <div class="container">
-    <a class="navbar-brand" href="#">Code Journal</a>
+    <!-- Brand -->
+    <a class="navbar-brand d-flex align-items-center gap-2" routerLink="/">
+      <img src="images/appicon.png" alt="Code Journal" class="navbar-logo" />
+      <span class="brand-text">Code Journal</span>
+    </a>
+
+    <!-- Mobile Toggle -->
     <button
-      class="navbar-toggler"
+      class="navbar-toggler border-0"
       type="button"
       data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
+      data-bs-target="#navbarMain"
+      aria-controls="navbarMain"
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+    <!-- Nav Content -->
+    <div class="collapse navbar-collapse" id="navbarMain">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" fragment="blogs">Blogs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" fragment="categories">Categories</a>
         </li>
         @if(user !== undefined && user?.roles?.includes('Writer')){
-
-
         <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
@@ -31,44 +43,30 @@
             Admin
           </a>
           <ul class="dropdown-menu">
-            <li>
-              <a class="dropdown-item" routerLink="admin/categories"
-                >Categories</a
-              >
-            </li>
+            <li><a class="dropdown-item" routerLink="admin/categories">Categories</a></li>
             <li><hr class="dropdown-divider" /></li>
-
-            <li>
-              <a class="dropdown-item" routerLink="admin/blogposts"
-                >Blog Posts</a
-              >
-            </li>
-
-            <li>
-              <a class="dropdown-item" routerLink="admin/users"
-                >Users</a
-              >
-            </li>
-            <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+            <li><a class="dropdown-item" routerLink="admin/blogposts">Blog Posts</a></li>
+            <li><a class="dropdown-item" routerLink="admin/users">Users</a></li>
           </ul>
         </li>
         }
       </ul>
 
-      <div class="d-flex">
-        <div class="d-flex">
-          @if (user === undefined) {
-          <!-- show the login button -->
-          <a [routerLink]="['/login']" class="btn btn-primary">Login</a>
-          } @else {
-          <div class="d-flex align-items-center">
-            <span>{{ user.email }}</span>
-            <button class="btn btn-primary ms-3" (click)="onLogout()">
-              Logout
-            </button>
-          </div>
-          }
+      <!-- Right Side -->
+      <div class="d-flex align-items-center gap-3">
+        @if (user === undefined) {
+        <a [routerLink]="['/login']" class="btn btn-login">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+          </svg>
+          Login
+        </a>
+        } @else {
+        <div class="d-flex align-items-center gap-2">
+          <span class="user-email">{{ user.email }}</span>
+          <button class="btn btn-logout" (click)="onLogout()">Logout</button>
         </div>
+        }
       </div>
     </div>
   </div>
