@@ -27,3 +27,16 @@ jobs:
             docker compose pull angular
             docker compose up -d angular
             docker image prune -f
+
+  health-check:
+    name: Health Check Web
+    needs: deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Wait for application to start
+        run: sleep 20
+
+      - name: Verify CodeJournal Web
+        run: |
+          curl --fail --silent --show-error https://codejournalx.com
