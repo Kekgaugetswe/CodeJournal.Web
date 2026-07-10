@@ -4,19 +4,12 @@
   </div>
   <div class="card-body">
     <div class="d-flex flex-md-row flex-sm-column flex-wrap">
-      <div class="col-8 p-4" style="overflow-y: scroll">
+      <div class="col-8 p-4 image-grid-container">
         @if (images$ | async; as images) {
           <div class="d-flex flex-wrap">
             @for (image of images; track image) {
               <div (click)="selectImage(image)">
-                <div
-                style="
-                  min-width: 100px;
-                  justify-content: center;
-                  cursor: pointer;
-                "
-                  class="me-1 bg-white d-flex align-items-center flex-column border p-3"
-                  >
+                <div class="me-1 d-flex align-items-center flex-column image-thumbnail">
                   <img
                     [src]="image.url"
                     [title]="image.title"
@@ -30,7 +23,7 @@
         }
       </div>
 
-      <div class="col-4 p-4 bg-light">
+      <div class="col-4 p-4 upload-panel">
         <h5>Upload Image</h5>
         <form #form="ngForm" (ngSubmit)="uploadImage()">
           <div class="mt-3">

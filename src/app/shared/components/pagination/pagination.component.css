@@ -1,9 +1,41 @@
 /* Pagination component styles */
-/* Bootstrap handles core pagination styling via classes: */
-/* pagination, page-item, page-link, active, disabled */
-/* Only component-specific overrides below */
 
 :host {
   display: block;
   margin-top: 1.5rem;
+}
+
+/* Override Bootstrap pagination styling with theme tokens */
+.pagination .page-link {
+  background-color: var(--background-primary);
+  color: var(--primary);
+  border-color: var(--border);
+  transition: var(--transition-theme);
+}
+
+.pagination .page-link:hover {
+  background-color: var(--primary-light);
+  color: var(--primary-hover);
+  border-color: var(--border);
+}
+
+.pagination .page-link:focus {
+  box-shadow: 0 0 0 0.2rem var(--focus-ring);
+}
+
+.pagination .page-item.active .page-link {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: var(--text-inverse);
+}
+
+.pagination .page-item.disabled .page-link {
+  background-color: var(--surface);
+  color: var(--text-muted);
+  border-color: var(--border-light);
+}
+
+.text-muted {
+  color: var(--text-muted) !important;
+  transition: var(--transition-theme);
 }

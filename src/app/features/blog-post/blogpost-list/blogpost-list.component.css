@@ -1,0 +1,122 @@
+/* BlogPost List Component Styles */
+
+/* Page header */
+.page-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 1.25rem 0;
+  transition: var(--transition-theme);
+}
+
+.page-header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* Search input group */
+.input-group .form-control {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  border-color: var(--border);
+  transition: var(--transition-theme);
+}
+
+.input-group .form-control::placeholder {
+  color: var(--text-muted);
+}
+
+.input-group .form-control:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 0.2rem var(--focus-ring);
+}
+
+/* Tag filter select */
+.form-select {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  border-color: var(--border);
+  transition: var(--transition-theme);
+}
+
+.form-select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 0.2rem var(--focus-ring);
+}
+
+/* Table card wrapper */
+.table-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--background-primary);
+  transition: var(--transition-theme);
+}
+
+.table-card .table {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.table-card .table thead th {
+  background: var(--surface);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border);
+  padding: 0.875rem 1rem;
+  transition: var(--transition-theme);
+}
+
+.table-card .table tbody td {
+  padding: 0.875rem 1rem;
+  vertical-align: middle;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-light);
+  transition: var(--transition-theme);
+}
+
+.table-card .table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table-card .table tbody tr:hover {
+  background: var(--surface);
+}
+
+/* Category badges */
+.badge-category {
+  background-color: var(--primary);
+  color: var(--text-inverse);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.3em 0.6em;
+  border-radius: var(--radius-sm);
+  transition: var(--transition-theme);
+}
+
+/* Spinner */
+.spinner-border {
+  color: var(--primary);
+}
+
+/* Alerts */
+.alert-info {
+  background-color: var(--info-light);
+  border-color: var(--info-border);
+  color: var(--info-text);
+  border-radius: var(--radius-md);
+  transition: var(--transition-theme);
+}
+
+.alert-danger {
+  background-color: var(--danger-bg);
+  border-color: var(--danger-border);
+  color: var(--danger-text);
+  border-radius: var(--radius-md);
+  transition: var(--transition-theme);
+}

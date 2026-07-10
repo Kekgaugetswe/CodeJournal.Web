@@ -1,0 +1,34 @@
+/* Add Category Component Styles */
+
+:host {
+  display: block;
+}
+
+.container h1 {
+  color: var(--text-primary);
+  font-weight: 700;
+  transition: var(--transition-theme);
+}
+
+.form-label {
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: var(--transition-theme);
+}
+
+.form-control {
+  background-color: var(--background-primary);
+  border-color: var(--border);
+  color: var(--text-primary);
+  transition: var(--transition-theme);
+}
+
+.form-control:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 0.2rem var(--focus-ring);
+}
+
+.form-control::placeholder {
+  color: var(--text-muted);
+}

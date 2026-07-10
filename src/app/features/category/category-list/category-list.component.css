@@ -1,0 +1,70 @@
+/* Category List Component Styles */
+
+:host {
+  display: block;
+}
+
+.page-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  transition: var(--transition-theme);
+}
+
+.page-header h1 {
+  color: var(--text-primary);
+  font-weight: 700;
+  transition: var(--transition-theme);
+}
+
+.form-control {
+  background-color: var(--background-primary);
+  border-color: var(--border);
+  color: var(--text-primary);
+  transition: var(--transition-theme);
+}
+
+.form-control:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 0.2rem var(--focus-ring);
+}
+
+.form-control::placeholder {
+  color: var(--text-muted);
+}
+
+.table-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: var(--transition-theme);
+}
+
+.table-card .table thead th {
+  background: var(--surface);
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  transition: var(--transition-theme);
+}
+
+.table-card .table tbody td {
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-light);
+  transition: var(--transition-theme);
+}
+
+.table-card .table tbody tr:hover {
+  background: var(--surface);
+}
+
+.btn-light {
+  background-color: var(--surface);
+  border-color: var(--border);
+  color: var(--text-secondary);
+  transition: var(--transition-theme);
+}
+
+.btn-light:hover {
+  background-color: var(--hover-overlay);
+  border-color: var(--border);
+  color: var(--text-primary);
+}

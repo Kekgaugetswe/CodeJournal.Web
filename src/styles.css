@@ -2,27 +2,128 @@
    Global Theme & Design System
    ============================ */
 
+/* ============================
+   Design Token System (Light)
+   ============================ */
 :root {
-  --color-primary: #4f46e5;
-  --color-primary-hover: #4338ca;
-  --color-primary-light: #eef2ff;
-  --color-danger: #ef4444;
-  --color-danger-hover: #dc2626;
-  --color-text: #1a1a2e;
-  --color-text-muted: #6b7280;
-  --color-border: #e5e7eb;
-  --color-bg: #ffffff;
-  --color-bg-subtle: #f9fafb;
+  /* Backgrounds */
+  --background-primary: #ffffff;
+  --surface: #f9fafb;
+  --surface-elevated: #ffffff;
+
+  /* Text */
+  --text-primary: #1a1a2e;
+  --text-secondary: #4a5568;
+  --text-muted: #6b7280;
+  --text-inverse: #ffffff;
+
+  /* Brand */
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-light: #eef2ff;
+
+  /* Semantic */
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --danger-bg: #fef2f2;
+  --danger-border: #fecaca;
+  --danger-text: #991b1b;
+  --success: #10b981;
+  --success-light: #f0fdf4;
+  --success-border: #bbf7d0;
+  --success-text: #166534;
+  --info-light: #eef2ff;
+  --info-border: #c7d2fe;
+  --info-text: #3730a3;
+
+  /* Borders & Shadows */
+  --border: #e5e7eb;
+  --border-light: #f3f4f6;
+  --shadow-small: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  /* Interactive */
+  --focus-ring: rgba(79, 70, 229, 0.15);
+  --hover-overlay: rgba(0, 0, 0, 0.04);
+
+  /* Radii (unchanged) */
   --radius-sm: 6px;
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-pill: 9999px;
+
+  /* Transitions */
+  --transition-theme: background-color 200ms ease-in-out,
+                      color 200ms ease-in-out,
+                      border-color 200ms ease-in-out,
+                      box-shadow 200ms ease-in-out;
+}
+
+/* ============================
+   Design Token System (Dark)
+   ============================ */
+:root.dark {
+  /* Backgrounds */
+  --background-primary: #0f172a;
+  --surface: #1e293b;
+  --surface-elevated: #334155;
+
+  /* Text */
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-inverse: #0f172a;
+
+  /* Brand */
+  --primary: #818cf8;
+  --primary-hover: #6366f1;
+  --primary-light: #1e1b4b;
+
+  /* Semantic */
+  --danger: #f87171;
+  --danger-hover: #ef4444;
+  --danger-bg: #451a1a;
+  --danger-border: #7f1d1d;
+  --danger-text: #fca5a5;
+  --success: #34d399;
+  --success-light: #064e3b;
+  --success-border: #065f46;
+  --success-text: #6ee7b7;
+  --info-light: #1e1b4b;
+  --info-border: #312e81;
+  --info-text: #a5b4fc;
+
+  /* Borders & Shadows */
+  --border: #334155;
+  --border-light: #1e293b;
+  --shadow-small: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.4);
+
+  /* Interactive */
+  --focus-ring: rgba(129, 140, 248, 0.25);
+  --hover-overlay: rgba(255, 255, 255, 0.05);
+}
+
+/* Theme transition shorthand */
+body,
+a,
+.btn-primary,
+.btn-outline-primary,
+.btn-danger,
+.form-control,
+.form-select,
+.alert-danger,
+.alert-success,
+.alert-info,
+.page-header,
+.table-card {
+  transition: var(--transition-theme);
 }
 
 /* Override Bootstrap primary */
 .btn-primary {
-  background-color: var(--color-primary) !important;
-  border-color: var(--color-primary) !important;
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
   border-radius: var(--radius-pill);
   font-weight: 500;
   padding: 0.5rem 1.25rem;
@@ -30,13 +131,13 @@
 
 .btn-primary:hover,
 .btn-primary:focus {
-  background-color: var(--color-primary-hover) !important;
-  border-color: var(--color-primary-hover) !important;
+  background-color: var(--primary-hover) !important;
+  border-color: var(--primary-hover) !important;
 }
 
 .btn-outline-primary {
-  color: var(--color-primary) !important;
-  border-color: var(--color-primary) !important;
+  color: var(--primary) !important;
+  border-color: var(--primary) !important;
   border-radius: var(--radius-pill);
   font-weight: 500;
   padding: 0.5rem 1.25rem;
@@ -44,45 +145,45 @@
 
 .btn-outline-primary:hover,
 .btn-outline-primary:focus {
-  background-color: var(--color-primary) !important;
-  border-color: var(--color-primary) !important;
-  color: #fff !important;
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: var(--text-inverse) !important;
 }
 
 .btn-danger {
-  background-color: var(--color-danger) !important;
-  border-color: var(--color-danger) !important;
+  background-color: var(--danger) !important;
+  border-color: var(--danger) !important;
   border-radius: var(--radius-pill);
 }
 
 .btn-danger:hover {
-  background-color: var(--color-danger-hover) !important;
-  border-color: var(--color-danger-hover) !important;
+  background-color: var(--danger-hover) !important;
+  border-color: var(--danger-hover) !important;
 }
 
 /* Form controls consistent styling */
 .form-control {
   border-radius: var(--radius-md);
-  border-color: var(--color-border);
+  border-color: var(--border);
   font-size: 0.9rem;
   padding: 0.5rem 0.75rem;
 }
 
 .form-control:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 0.2rem rgba(79, 70, 229, 0.15);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 0.2rem var(--focus-ring);
 }
 
 .form-select {
   border-radius: var(--radius-md);
-  border-color: var(--color-border);
+  border-color: var(--border);
   font-size: 0.9rem;
   padding: 0.5rem 0.75rem;
 }
 
 .form-select:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 0.2rem rgba(79, 70, 229, 0.15);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 0.2rem var(--focus-ring);
 }
 
 .input-group .form-control {
@@ -101,38 +202,39 @@
 
 /* Alert styling */
 .alert-danger {
-  background-color: #fef2f2;
-  border-color: #fecaca;
-  color: #991b1b;
+  background-color: var(--danger-bg);
+  border-color: var(--danger-border);
+  color: var(--danger-text);
   border-radius: var(--radius-md);
 }
 
 .alert-success {
-  background-color: #f0fdf4;
-  border-color: #bbf7d0;
-  color: #166534;
+  background-color: var(--success-light);
+  border-color: var(--success-border);
+  color: var(--success-text);
   border-radius: var(--radius-md);
 }
 
 .alert-info {
-  background-color: var(--color-primary-light);
-  border-color: #c7d2fe;
-  color: #3730a3;
+  background-color: var(--info-light);
+  border-color: var(--info-border);
+  color: var(--info-text);
   border-radius: var(--radius-md);
 }
 
 /* Links */
 a {
-  color: var(--color-primary);
+  color: var(--primary);
 }
 
 a:hover {
-  color: var(--color-primary-hover);
+  color: var(--primary-hover);
 }
 
 /* Body defaults */
 body {
-  color: var(--color-text);
+  background-color: var(--background-primary);
+  color: var(--text-primary);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
@@ -141,21 +243,21 @@ body {
    ============================ */
 
 .page-header {
-  background: var(--color-bg-subtle);
-  border-bottom: 1px solid var(--color-border);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
   padding: 1.25rem 0;
 }
 
 .page-header h1 {
   font-size: 1.75rem;
   font-weight: 700;
-  color: var(--color-text);
+  color: var(--text-primary);
   margin: 0;
 }
 
 /* Shared admin table card */
 .table-card {
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
@@ -165,13 +267,13 @@ body {
 }
 
 .table-card .table thead th {
-  background: var(--color-bg-subtle);
+  background: var(--surface);
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--color-text-muted);
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--border);
   padding: 0.875rem 1rem;
 }
 
@@ -179,7 +281,7 @@ body {
   padding: 0.875rem 1rem;
   vertical-align: middle;
   font-size: 0.9rem;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid var(--border-light);
 }
 
 .table-card .table tbody tr:last-child td {
@@ -187,7 +289,7 @@ body {
 }
 
 .table-card .table tbody tr:hover {
-  background: #fafafa;
+  background: var(--surface);
 }
 
 /* ============================

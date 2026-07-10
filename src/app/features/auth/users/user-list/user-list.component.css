@@ -1,20 +1,23 @@
 .page-header {
-  background: var(--color-bg-subtle);
-  border-bottom: 1px solid var(--color-border);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
   padding: 1.25rem 0;
+  transition: var(--transition-theme);
 }
 
 .page-header h1 {
   font-size: 1.75rem;
   font-weight: 700;
-  color: var(--color-text);
+  color: var(--text-primary);
   margin: 0;
+  transition: var(--transition-theme);
 }
 
 .table-card {
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
+  transition: var(--transition-theme);
 }
 
 .table {
@@ -22,21 +25,23 @@
 }
 
 .table thead th {
-  background: var(--color-bg-subtle);
+  background: var(--surface);
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--color-text-muted);
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--border);
   padding: 0.875rem 1rem;
+  transition: var(--transition-theme);
 }
 
 .table tbody td {
   padding: 0.875rem 1rem;
   vertical-align: middle;
   font-size: 0.9rem;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid var(--border-light);
+  transition: var(--transition-theme);
 }
 
 .table tbody tr:last-child td {
@@ -44,5 +49,5 @@
 }
 
 .table tbody tr:hover {
-  background: #fafafa;
+  background: var(--hover-overlay);
 }

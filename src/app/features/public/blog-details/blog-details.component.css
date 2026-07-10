@@ -1,0 +1,258 @@
+/* Blog Details Page */
+:host {
+  display: block;
+  transition: var(--transition-theme);
+}
+
+/* Blog Title */
+h1 {
+  color: var(--text-primary);
+  font-weight: 700;
+  transition: var(--transition-theme);
+}
+
+/* Meta Info */
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+/* Like Button */
+#btnLike {
+  color: var(--primary);
+  transition: var(--transition-theme);
+}
+
+/* Category Badges */
+.badge.bg-secondary {
+  background: var(--surface) !important;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  transition: var(--transition-theme);
+}
+
+/* Markdown / Blog Content */
+.blog-content {
+  color: var(--text-primary);
+  line-height: 1.8;
+  transition: var(--transition-theme);
+}
+
+.blog-content h1,
+.blog-content h2,
+.blog-content h3,
+.blog-content h4,
+.blog-content h5,
+.blog-content h6 {
+  color: var(--text-primary);
+  font-weight: 700;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.blog-content p {
+  color: var(--text-primary);
+  margin-bottom: 1em;
+}
+
+.blog-content a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.blog-content a:hover {
+  color: var(--primary-hover);
+}
+
+.blog-content blockquote {
+  border-left: 4px solid var(--primary);
+  padding: 0.75rem 1rem;
+  margin: 1.5em 0;
+  background: var(--surface);
+  color: var(--text-secondary);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  transition: var(--transition-theme);
+}
+
+.blog-content ul,
+.blog-content ol {
+  color: var(--text-primary);
+  padding-left: 1.5em;
+}
+
+.blog-content li {
+  margin-bottom: 0.25em;
+}
+
+.blog-content hr {
+  border-color: var(--border);
+  margin: 2em 0;
+}
+
+.blog-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+}
+
+.blog-content th {
+  background: var(--surface);
+  color: var(--text-primary);
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  text-align: left;
+}
+
+.blog-content td {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+.blog-content tr:nth-child(even) td {
+  background: var(--surface);
+}
+
+/* Code blocks — syntax highlighting dark mode support */
+.blog-content code {
+  background: var(--surface);
+  color: var(--primary);
+  padding: 0.15em 0.4em;
+  border-radius: var(--radius-sm);
+  font-size: 0.875em;
+  transition: var(--transition-theme);
+}
+
+.blog-content pre {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  margin: 1.5em 0;
+  transition: var(--transition-theme);
+}
+
+.blog-content pre code {
+  background: transparent;
+  color: var(--text-primary);
+  padding: 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+/* Scrollbar for code blocks */
+.blog-content pre::-webkit-scrollbar {
+  height: 6px;
+}
+
+.blog-content pre::-webkit-scrollbar-track {
+  background: var(--surface);
+  border-radius: 3px;
+}
+
+.blog-content pre::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+.blog-content pre::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Images in markdown */
+.blog-content img {
+  max-width: 100%;
+  border-radius: var(--radius-md);
+  margin: 1.5em 0;
+}
+
+/* Comments Section */
+.card {
+  background: var(--surface-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: var(--transition-theme);
+}
+
+.card-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 1.25rem;
+  transition: var(--transition-theme);
+}
+
+.card-header h5 {
+  color: var(--text-primary);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.card-body {
+  padding: 1.25rem;
+  background: var(--surface-elevated);
+  transition: var(--transition-theme);
+}
+
+/* Comment Cards */
+.card-body .card {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+}
+
+.card-body .card .card-body {
+  background: var(--surface);
+}
+
+/* Form Controls in Comments */
+.form-label {
+  color: var(--text-primary);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.form-control {
+  background: var(--background-primary);
+  border-color: var(--border);
+  color: var(--text-primary);
+  transition: var(--transition-theme);
+}
+
+.form-control:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 0.2rem var(--focus-ring);
+  background: var(--background-primary);
+  color: var(--text-primary);
+}
+
+/* Add Comment Button */
+.btn-dark {
+  background: var(--text-primary);
+  border-color: var(--text-primary);
+  color: var(--background-primary);
+  border-radius: var(--radius-pill);
+  font-weight: 500;
+  transition: var(--transition-theme);
+}
+
+.btn-dark:hover {
+  background: var(--text-secondary);
+  border-color: var(--text-secondary);
+  color: var(--background-primary);
+}
+
+/* Featured Image */
+.img-fluid {
+  border-radius: var(--radius-lg);
+}
+
+/* Spinner */
+.spinner-border {
+  color: var(--primary);
+}
+
+/* Text Secondary (comment authors/dates) */
+.text-secondary {
+  color: var(--text-muted) !important;
+}

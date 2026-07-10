@@ -1,5 +1,8 @@
 .navbar {
   padding: 0.75rem 0;
+  background-color: var(--background-primary);
+  border-bottom: 1px solid var(--border);
+  transition: var(--transition-theme);
 }
 
 .navbar-logo {
@@ -11,25 +14,26 @@
 .brand-text {
   font-size: 1.15rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--text-primary);
+  transition: var(--transition-theme);
 }
 
 .nav-link {
   font-size: 0.9rem;
   font-weight: 500;
-  color: #4a5568;
+  color: var(--text-secondary);
   padding: 0.5rem 1rem !important;
-  transition: color 0.15s ease;
+  transition: var(--transition-theme);
 }
 
 .nav-link:hover,
 .nav-link.active {
-  color: #4f46e5;
+  color: var(--primary);
 }
 
 .btn-login {
-  background: #4f46e5;
-  color: #fff;
+  background: var(--primary);
+  color: var(--text-inverse);
   border: none;
   border-radius: 20px;
   padding: 0.5rem 1.25rem;
@@ -37,30 +41,64 @@
   font-weight: 500;
   display: flex;
   align-items: center;
-  transition: background 0.15s ease;
+  transition: var(--transition-theme);
 }
 
 .btn-login:hover {
-  background: #4338ca;
-  color: #fff;
+  background: var(--primary-hover);
+  color: var(--text-inverse);
 }
 
 .btn-logout {
-  background: #4f46e5;
-  color: #fff;
+  background: var(--primary);
+  color: var(--text-inverse);
   border: none;
   border-radius: 20px;
   padding: 0.4rem 1rem;
   font-size: 0.8rem;
   font-weight: 500;
+  transition: var(--transition-theme);
 }
 
 .btn-logout:hover {
-  background: #4338ca;
-  color: #fff;
+  background: var(--primary-hover);
+  color: var(--text-inverse);
 }
 
 .user-email {
   font-size: 0.85rem;
-  color: #4a5568;
+  color: var(--text-secondary);
+  transition: var(--transition-theme);
+}
+
+/* Dropdown menu theming */
+.dropdown-menu {
+  background-color: var(--surface-elevated);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-medium);
+  transition: var(--transition-theme);
+}
+
+.dropdown-item {
+  color: var(--text-primary);
+  transition: var(--transition-theme);
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: var(--hover-overlay);
+  color: var(--text-primary);
+}
+
+.dropdown-divider {
+  border-color: var(--border);
+}
+
+/* Mobile toggler for dark mode */
+.navbar-toggler-icon {
+  filter: var(--navbar-toggler-filter, none);
+}
+
+:host-context(.dark) .navbar-toggler-icon {
+  filter: invert(1);
 }

@@ -1,0 +1,90 @@
+/* Image Selector component styles */
+
+:host {
+  display: block;
+}
+
+/* Card theming */
+.card {
+  background-color: var(--background-primary);
+  border-color: var(--border);
+  transition: var(--transition-theme);
+}
+
+.card-header {
+  background-color: var(--surface);
+  border-bottom-color: var(--border);
+  transition: var(--transition-theme);
+}
+
+.card-title {
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.card-body {
+  background-color: var(--background-primary);
+}
+
+/* Image grid area */
+.image-grid-container {
+  overflow-y: scroll;
+}
+
+.image-thumbnail {
+  min-width: 100px;
+  justify-content: center;
+  cursor: pointer;
+  background-color: var(--background-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+  transition: var(--transition-theme);
+}
+
+.image-thumbnail:hover {
+  background-color: var(--surface);
+  box-shadow: var(--shadow-small);
+}
+
+.image-thumbnail span {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+/* Upload panel */
+.upload-panel {
+  background-color: var(--surface);
+  transition: var(--transition-theme);
+}
+
+.upload-panel h5 {
+  color: var(--text-primary);
+}
+
+/* Form controls */
+.form-control {
+  background-color: var(--background-primary);
+  border-color: var(--border);
+  color: var(--text-primary);
+  transition: var(--transition-theme);
+}
+
+.form-control:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 0.2rem var(--focus-ring);
+}
+
+/* Upload button */
+.btn-dark {
+  background-color: var(--text-primary);
+  border-color: var(--text-primary);
+  color: var(--text-inverse);
+  transition: var(--transition-theme);
+}
+
+.btn-dark:hover {
+  background-color: var(--text-secondary);
+  border-color: var(--text-secondary);
+  color: var(--text-inverse);
+}
