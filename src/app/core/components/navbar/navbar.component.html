@@ -3,7 +3,7 @@
     <!-- Brand -->
     <a class="navbar-brand d-flex align-items-center gap-2" routerLink="/">
       <img src="images/appicon.png" alt="Code Journal" class="navbar-logo" />
-      <span class="brand-text">Code Journal</span>
+      <span class="brand-text">CodeJournalX</span>
     </a>
 
     <!-- Mobile Toggle -->
@@ -29,7 +29,7 @@
           <a class="nav-link" routerLink="/" fragment="blogs">Blogs</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/" fragment="categories">Categories</a>
+          <a class="nav-link" routerLink="/categories" routerLinkActive="active">Categories</a>
         </li>
         @if(user !== undefined && user?.roles?.includes('Writer')){
         <li class="nav-item dropdown">

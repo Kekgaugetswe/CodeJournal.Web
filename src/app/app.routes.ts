@@ -12,6 +12,7 @@ import { RegisterComponent } from './features/auth/register/register.component';
 import { ConfirmEmailComponent } from './features/auth/confirm-email/confirm-email.component';
 import { ForgotPasswordComponent } from './features/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './features/auth/reset-password/reset-password.component';
+import { CategoriesComponent } from './features/public/categories/categories.component';
 import { authGuard } from './features/auth/guards/auth.guard';
 import { UserListComponent } from './features/auth/users/user-list/user-list.component';
 
@@ -43,6 +44,10 @@ export const routes: Routes = [
   {
     path: 'blog/:url',
     component: BlogDetailsComponent,
+  },
+  {
+    path: 'categories',
+    component: CategoriesComponent,
   },
   {
     path: 'admin/categories',

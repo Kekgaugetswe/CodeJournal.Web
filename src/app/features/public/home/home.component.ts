@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { BlogPostService } from '../../blog-post/services/blog-post.service';
 import { BlogPost } from '../../blog-post/models/blog-post.model';
 import { PaginationMetadata } from '../../../shared/models/api-response.model';
@@ -29,7 +29,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private readonly blogPostService: BlogPostService,
-    private readonly categoryService: CategoryService
+    private readonly categoryService: CategoryService,
+    private readonly route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -41,7 +42,15 @@ export class HomeComponent implements OnInit {
         this.categories = [];
       },
     });
-    this.loadPosts(1);
+
+    // Read categoryId from query params (e.g. from Categories page navigation)
+    this.route.queryParams.subscribe((params) => {
+      const categoryId = params['categoryId'] || null;
+      if (categoryId) {
+        this.selectedCategoryId = categoryId;
+      }
+      this.loadPosts(1);
+    });
   }
 
   onTagSelect(categoryId: string | null): void {
