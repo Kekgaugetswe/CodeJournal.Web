@@ -1,9 +1,21 @@
 <section class="categories-page">
+  <!-- Decorative background layers -->
+  <div class="bg-glow bg-glow-blue"></div>
+  <div class="bg-glow bg-glow-purple"></div>
+  <div class="bg-circle bg-circle-left"></div>
+  <div class="bg-circle bg-circle-right"></div>
+  <div class="bg-dot-grid"></div>
+  <div class="bg-particle bg-particle-1"></div>
+  <div class="bg-particle bg-particle-2"></div>
+  <div class="bg-particle bg-particle-3"></div>
+  <div class="bg-particle bg-particle-4"></div>
+  <div class="bg-particle bg-particle-5"></div>
+
   <!-- Category grid view -->
   @if (!selectedCategory) {
     <header class="categories-header">
       <h1>Categories</h1>
-      <p>Browse articles by topic and find content that matches your interests.</p>
+      <p>Browse development topics and discover content that matches your interests.</p>
     </header>
 
     @if (isLoading) {
@@ -20,7 +32,7 @@
           class="retry-button"
           (click)="loadCategories()"
           aria-label="Retry loading categories">
-          Retry
+          <i class="bi bi-arrow-clockwise"></i> Retry
         </button>
       </div>
     }
@@ -36,24 +48,23 @@
         @for (category of categories; track category.id) {
           <button
             class="category-card"
+            [style.--card-accent]="getCategoryColour(category.name)"
             (click)="selectCategory(category)"
             type="button">
-            <div class="card-content">
-              <div
-                class="icon-circle"
-                [style.background-color]="getCategoryColour(category.name)">
-                <span class="icon" [innerHTML]="getCategoryIcon(category.name)"></span>
+            <div class="card-inner">
+              <div class="card-icon-wrap">
+                <i class="bi" [ngClass]="getCategoryIcon(category.name)"></i>
               </div>
-              <div class="card-details">
-                <h2 class="category-name">{{ category.name }}</h2>
-                <p class="category-description">{{ getDescription(category) }}</p>
-                <span class="article-count">{{ getArticleCountLabel(category.articleCount ?? 0) }}</span>
+              <div class="card-body">
+                <h2 class="card-title">{{ category.name }}</h2>
+                <p class="card-desc">{{ getDescription(category) }}</p>
+                <span class="card-badge">
+                  {{ getArticleCountLabel(category.articleCount ?? 0) }}
+                </span>
               </div>
-            </div>
-            <div class="card-arrow" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
-                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
-              </svg>
+              <div class="card-arrow" aria-hidden="true">
+                <i class="bi bi-arrow-right"></i>
+              </div>
             </div>
           </button>
         }
@@ -65,9 +76,7 @@
   @if (selectedCategory) {
     <header class="categories-header">
       <button class="back-button" (click)="backToCategories()" aria-label="Back to all categories">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
-          <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
-        </svg>
+        <i class="bi bi-arrow-left"></i>
         All Categories
       </button>
       <h1>{{ selectedCategory.name }}</h1>
@@ -88,7 +97,7 @@
           class="retry-button"
           (click)="loadArticles(pagination?.pageNumber ?? 1)"
           aria-label="Retry loading articles">
-          Retry
+          <i class="bi bi-arrow-clockwise"></i> Retry
         </button>
       </div>
     }
@@ -108,7 +117,7 @@
             </div>
             <div class="article-content">
               <div class="article-meta">
-                <span class="article-date">{{ blog.publishedDate | date:'MMMM dd, yyyy' }}</span>
+                <span class="article-date">{{ blog.publishedDate | date:'MMM dd, yyyy' }}</span>
               </div>
               <h3 class="article-title">{{ blog.title }}</h3>
               <p class="article-description">{{ blog.shortDescription }}</p>

@@ -5,6 +5,21 @@
   transition: var(--transition-theme);
 }
 
+:host-context(.dark) .navbar {
+  background-color: rgba(8, 17, 31, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom-color: rgba(148, 163, 184, 0.06);
+}
+
+:host-context(.dark) .nav-link {
+  transition: color 200ms ease;
+}
+
+:host-context(.dark) .nav-link:hover {
+  color: #818cf8;
+}
+
 .navbar-logo {
   width: 36px;
   height: 36px;
