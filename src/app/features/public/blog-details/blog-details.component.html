@@ -9,19 +9,13 @@
     <h1 class="mt-4">{{ blogPost.title }}</h1>
     <div class="d-flex justify-content-between mt-4">
       <span class="text-muted">{{ blogPost.author }}</span>
-      <span class="text-muted"
-        >By {{ blogPost.publishedDate | date : "dd-MM-yyy" }}</span
-      >
+      <span class="text-muted">{{ blogPost.publishedDate | date : "dd-MM-yyy" }}</span>
     </div>
     <div class="mb-3">
       <span>
         <i
           id="btnLike"
-          [ngClass]="
-            blogPost.liked
-              ? 'bi bi-hand-thumbs-up-fill text-primary'
-              : 'bi bi-hand-thumbs-up'
-          "
+          [ngClass]="blogPost.liked ? 'bi bi-hand-thumbs-up-fill text-primary' : 'bi bi-hand-thumbs-up'"
           style="cursor: pointer"
           (click)="onLike(blogPost)"
         ></i>
@@ -31,63 +25,299 @@
     @if (blogPost.categories) {
     <div class="mt-4">
       @for (category of blogPost.categories; track category) {
-      <span class="badge bg-secondary me-2">
-        {{ category.name }}
-      </span>
+      <span class="badge bg-secondary me-2">{{ category.name }}</span>
       }
     </div>
     }
     <div class="mt-4 blog-content">
-      <markdown [data]="blogPost.content"> </markdown>
+      <markdown [data]="blogPost.content"></markdown>
     </div>
-    <div class="card">
-      <div class="card-header">
-        <h5>Comments</h5>
-        <!-- if loggedin -->
-        <form (ngSubmit)="onSubmitComment()">
-          <div class="mb-3">
-            <label class="form-label">Comment Description</label>
-            <input
-              type="text"
-              class="form-control"
+
+    <!-- ============================================
+         Premium Comments Section
+         ============================================ -->
+    <section class="comments-section">
+      <!-- Header -->
+      <div class="comments-header">
+        <div class="comments-header-left">
+          <h3 class="comments-title">
+            <i class="bi bi-chat-dots"></i>
+            Comments <span class="comment-count">({{ commentCount }})</span>
+          </h3>
+          <p class="comments-subtitle">Join the conversation! Your thoughts help build a better community.</p>
+        </div>
+      </div>
+
+      <!-- Comment Composer -->
+      @if (currentUser) {
+      <div class="comment-composer">
+        <div class="composer-avatar">
+          <span class="avatar-circle">{{ userInitial }}</span>
+        </div>
+        <div class="composer-body">
+          <form (ngSubmit)="onSubmitComment()">
+            <!-- Write / Preview Toggle -->
+            <div class="mode-toggle">
+              <button type="button" class="mode-btn" [class.active]="!isPreviewMode" (click)="isPreviewMode = false">
+                <i class="bi bi-pencil"></i> Write
+              </button>
+              <button type="button" class="mode-btn" [class.active]="isPreviewMode" (click)="togglePreview()">
+                <i class="bi bi-eye"></i> Preview
+              </button>
+            </div>
+
+            <!-- Write Mode -->
+            @if (!isPreviewMode) {
+            <textarea
+              #commentTextarea
+              class="composer-textarea"
               [(ngModel)]="commentDescription"
               name="commentDescription"
-              required
-            />
-          </div>
-          <div class="mb-3">
-            <button type="submit" class="btn btn-dark">Add Comment</button>
-          </div>
-        </form>
-      </div>
-      <div class="card-body">
-        @if (blogPostComments$ | async; as comments) {
-        <!-- <h3>Comments ({{ comments.length }})</h3> -->
+              placeholder="Share your thoughts... (Supports Markdown)"
+              rows="4"
+              aria-label="Write a comment using Markdown"
+              [disabled]="isPosting"
+              (keydown)="onTextareaKeydown($event)"
+            ></textarea>
+            }
 
-        @for (comment of comments; track comment) {
-        <!-- <div class="comment">
-          <strong>{{ comment.userName }}</strong>
-          <p>{{ comment.description }}</p>
-          <small>{{ comment.dateAdded | date : "short" }}</small>
-        </div> -->
-        <div class="card mb-3">
-          <div class="card-body">
-            <div >
-              {{comment.description}}
+            <!-- Preview Mode -->
+            @if (isPreviewMode) {
+            <div class="composer-preview">
+              @if (commentDescription.trim()) {
+                <div class="preview-content" [innerHTML]="renderCommentMarkdown(commentDescription)"></div>
+              } @else {
+                <p class="preview-empty">Nothing to preview</p>
+              }
             </div>
-            <div class="d-flex justify-content-between">
-              <span class="text-secondary">{{comment.userName}}</span>
-              <span class="text-secondary">{{comment.dateAdded | date: "medium"}}</span>
+            }
 
+            <!-- Formatting Toolbar -->
+            <div class="composer-toolbar">
+              <div class="toolbar-buttons">
+                <button type="button" class="toolbar-btn" [class.active]="activeFormat === 'bold'"
+                  aria-label="Bold (Ctrl+B)" title="Bold (Ctrl+B)"
+                  [disabled]="isPosting || isPreviewMode" (click)="applyBold()">
+                  <i class="bi bi-type-bold"></i>
+                </button>
+                <button type="button" class="toolbar-btn" [class.active]="activeFormat === 'italic'"
+                  aria-label="Italic (Ctrl+I)" title="Italic (Ctrl+I)"
+                  [disabled]="isPosting || isPreviewMode" (click)="applyItalic()">
+                  <i class="bi bi-type-italic"></i>
+                </button>
+                <button type="button" class="toolbar-btn" [class.active]="activeFormat === 'link'"
+                  aria-label="Insert link (Ctrl+K)" title="Insert link (Ctrl+K)"
+                  [disabled]="isPosting || isPreviewMode" (click)="applyLink()">
+                  <i class="bi bi-link-45deg"></i>
+                </button>
+                <button type="button" class="toolbar-btn" [class.active]="activeFormat === 'code'"
+                  aria-label="Inline code" title="Inline code"
+                  [disabled]="isPosting || isPreviewMode" (click)="applyInlineCode()">
+                  <i class="bi bi-code-slash"></i>
+                </button>
+                <button type="button" class="toolbar-btn" [class.active]="activeFormat === 'quote'"
+                  aria-label="Quote" title="Quote"
+                  [disabled]="isPosting || isPreviewMode" (click)="applyQuote()">
+                  <i class="bi bi-blockquote-left"></i>
+                </button>
+                <button type="button" class="toolbar-btn" [class.active]="activeFormat === 'bullet'"
+                  aria-label="Bullet list" title="Bullet list"
+                  [disabled]="isPosting || isPreviewMode" (click)="applyBulletList()">
+                  <i class="bi bi-list-ul"></i>
+                </button>
+                <button type="button" class="toolbar-btn" [class.active]="activeFormat === 'numbered'"
+                  aria-label="Numbered list" title="Numbered list"
+                  [disabled]="isPosting || isPreviewMode" (click)="applyNumberedList()">
+                  <i class="bi bi-list-ol"></i>
+                </button>
+                <div class="emoji-picker-wrapper" style="position: relative; display: inline-block;">
+                  <button type="button" class="toolbar-btn"
+                    aria-label="Emoji" title="Emoji"
+                    [disabled]="isPosting || isPreviewMode" (click)="toggleEmojiPicker()">
+                    <i class="bi bi-emoji-smile"></i>
+                  </button>
+                  @if (showEmojiPicker) {
+                  <div class="emoji-picker">
+                    @for (emoji of emojis; track emoji) {
+                    <button type="button" class="emoji-btn" (click)="insertEmoji(emoji)" [attr.aria-label]="'Insert ' + emoji">
+                      {{ emoji }}
+                    </button>
+                    }
+                  </div>
+                  }
+                </div>
+              </div>
+              <button
+                type="submit"
+                class="post-btn"
+                [disabled]="!commentDescription.trim() || isPosting">
+                @if (isPosting) {
+                  <span class="spinner-border spinner-border-sm me-1" role="status"></span>
+                  Posting...
+                } @else {
+                  <i class="bi bi-send me-1"></i> Post Comment
+                }
+              </button>
             </div>
-          </div>
+            <p class="composer-helper">
+              <i class="bi bi-markdown"></i>
+              Markdown supported. <strong>Ctrl+B</strong> bold, <strong>Ctrl+I</strong> italic, <strong>Ctrl+K</strong> link.
+            </p>
+          </form>
         </div>
+      </div>
+      } @else {
+      <div class="comment-login-prompt">
+        <i class="bi bi-person-circle"></i>
+        <p>Log in to join the conversation</p>
+      </div>
+      }
+
+      <!-- Comments List -->
+      @if (blogPostComments$ | async; as comments) {
+        @if (comments.length > 0) {
+          <div class="comments-list">
+            @for (comment of comments; track comment.id) {
+            @if (!shouldHideComment(comment)) {
+            <div class="comment-card">
+              <div class="comment-avatar">
+                <span class="avatar-circle avatar-sm">{{ comment.userName?.charAt(0)?.toUpperCase() || '?' }}</span>
+              </div>
+              <div class="comment-content">
+                @if (comment.isDeleted) {
+                <div class="comment-deleted">
+                  <i class="bi bi-trash"></i> <em>This comment has been deleted.</em>
+                </div>
+                } @else {
+                <div class="comment-meta">
+                  <span class="comment-author">{{ comment.userName }}</span>
+                  <span class="comment-time">{{ getTimeAgo(comment.dateAdded) }}</span>
+                </div>
+                <div class="comment-text" [innerHTML]="renderCommentMarkdown(comment.description)"></div>
+                <div class="comment-actions">
+                  <button type="button" class="action-btn" [class.liked]="comment.isLikedByCurrentUser" aria-label="Like comment" (click)="toggleLike(comment)" [disabled]="comment.isLikeLoading">
+                    <i class="bi" [ngClass]="comment.isLikedByCurrentUser ? 'bi-heart-fill' : 'bi-heart'"></i> <span class="action-count">{{ comment.likeCount }}</span>
+                  </button>
+                  @if (currentUser) {
+                  <button type="button" class="action-btn" aria-label="Reply to comment" (click)="openReply(comment)">
+                    <i class="bi bi-reply"></i> Reply
+                  </button>
+                  }
+                  @if (comment.canDelete) {
+                  <button type="button" class="action-btn action-btn-danger" aria-label="Delete comment" (click)="deleteComment(comment)" [disabled]="comment.isDeleteLoading">
+                    @if (comment.isDeleteLoading) {
+                      <span class="spinner-border spinner-border-sm" role="status"></span>
+                    } @else {
+                      <i class="bi bi-trash"></i> Delete
+                    }
+                  </button>
+                  }
+                </div>
+                }
+
+                <!-- Reply Editor -->
+                @if (activeReplyId === comment.id) {
+                <div class="reply-composer">
+                  <div class="reply-composer-header">
+                    <span class="replying-to">Replying to <strong>&#64;{{ replyingToUserName }}</strong></span>
+                    <button type="button" class="cancel-reply-btn" (click)="cancelReply()" aria-label="Cancel reply">
+                      <i class="bi bi-x-lg"></i>
+                    </button>
+                  </div>
+                  <textarea
+                    class="reply-textarea"
+                    [(ngModel)]="replyDescription"
+                    name="replyDescription"
+                    placeholder="Write a reply..."
+                    rows="3"
+                    aria-label="Write a reply"
+                    [disabled]="isPostingReply"
+                    (keydown)="onTextareaKeydown($event)"
+                  ></textarea>
+                  <div class="reply-actions">
+                    <button type="button" class="cancel-btn" (click)="cancelReply()" [disabled]="isPostingReply">Cancel</button>
+                    <button type="button" class="post-reply-btn" (click)="submitReply()" [disabled]="!replyDescription.trim() || isPostingReply">
+                      @if (isPostingReply) {
+                        <span class="spinner-border spinner-border-sm me-1" role="status"></span> Posting...
+                      } @else {
+                        <i class="bi bi-send me-1"></i> Post Reply
+                      }
+                    </button>
+                  </div>
+                </div>
+                }
+
+                <!-- Replies -->
+                @if (getLiveReplies(comment).length > 0) {
+                <div class="replies-toggle">
+                  <button type="button" class="toggle-replies-btn" (click)="toggleReplies(comment.id)" [attr.aria-expanded]="isRepliesExpanded(comment.id)">
+                    <i class="bi" [ngClass]="isRepliesExpanded(comment.id) ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+                    {{ isRepliesExpanded(comment.id) ? 'Hide' : 'View' }} {{ getLiveReplies(comment).length }} {{ getLiveReplies(comment).length === 1 ? 'reply' : 'replies' }}
+                  </button>
+                </div>
+
+                @if (isRepliesExpanded(comment.id)) {
+                <div class="replies-list">
+                  @for (reply of getLiveReplies(comment); track reply.id) {
+                  <div class="reply-card">
+                    <div class="comment-avatar">
+                      <span class="avatar-circle avatar-xs">{{ reply.userName?.charAt(0)?.toUpperCase() || '?' }}</span>
+                    </div>
+                    <div class="comment-content">
+                      @if (reply.isDeleted) {
+                      <div class="comment-deleted">
+                        <i class="bi bi-trash"></i> <em>This reply has been deleted.</em>
+                      </div>
+                      } @else {
+                      <div class="comment-meta">
+                        <span class="comment-author">{{ reply.userName }}</span>
+                        <span class="comment-time">{{ getTimeAgo(reply.dateAdded) }}</span>
+                      </div>
+                      <div class="comment-text" [innerHTML]="renderCommentMarkdown(reply.description)"></div>
+                      <div class="comment-actions">
+                        <button type="button" class="action-btn" [class.liked]="reply.isLikedByCurrentUser" aria-label="Like reply" (click)="toggleLike(reply)" [disabled]="reply.isLikeLoading">
+                          <i class="bi" [ngClass]="reply.isLikedByCurrentUser ? 'bi-heart-fill' : 'bi-heart'"></i> <span class="action-count">{{ reply.likeCount }}</span>
+                        </button>
+                        @if (currentUser) {
+                        <button type="button" class="action-btn" aria-label="Reply" (click)="openReply(comment)">
+                          <i class="bi bi-reply"></i> Reply
+                        </button>
+                        }
+                        @if (reply.canDelete) {
+                        <button type="button" class="action-btn action-btn-danger" aria-label="Delete reply" (click)="deleteComment(reply)" [disabled]="reply.isDeleteLoading">
+                          @if (reply.isDeleteLoading) {
+                            <span class="spinner-border spinner-border-sm" role="status"></span>
+                          } @else {
+                            <i class="bi bi-trash"></i> Delete
+                          }
+                        </button>
+                        }
+                      </div>
+                      }
+                    </div>
+                  </div>
+                  }
+                </div>
+                }
+                }
+              </div>
+            </div>
+            }
+            }
+          </div>
+        } @else {
+          <div class="comments-empty">
+            <i class="bi bi-chat-square-text"></i>
+            <p>No comments yet. Be the first to share your thoughts!</p>
+          </div>
         }
       } @else {
-        <p>Loading comments...</p>
-        }
-      </div>
-    </div>
+        <div class="comments-loading">
+          <div class="spinner-border spinner-border-sm" role="status"></div>
+          <span>Loading comments...</span>
+        </div>
+      }
+    </section>
   </div>
 </div>
 } @else {
