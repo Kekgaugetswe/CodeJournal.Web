@@ -312,3 +312,152 @@ body {
   max-width: 100%;
   margin: 2em 0 2em 0;
 }
+
+
+/* ============================
+   Code Block Styling (Prism)
+   ============================ */
+
+/* Container */
+pre[class*="language-"] {
+  position: relative;
+  border-radius: 12px;
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  tab-size: 2;
+  -moz-tab-size: 2;
+  background: #1e1e2e !important;
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+code[class*="language-"] {
+  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Cascadia Code', Consolas, 'Courier New', monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+/* Inline code */
+:not(pre) > code {
+  background: var(--surface, #f1f5f9);
+  color: var(--primary, #4f46e5);
+  padding: 0.2rem 0.45rem;
+  border-radius: 5px;
+  font-size: 0.84em;
+  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+  border: 1px solid var(--border, #e5e7eb);
+}
+
+:root.dark :not(pre) > code {
+  background: rgba(99, 102, 241, 0.1);
+  color: #a5b4fc;
+  border-color: rgba(99, 102, 241, 0.2);
+}
+
+/* Prism toolbar (language label + copy button) */
+div.code-toolbar {
+  position: relative;
+}
+
+div.code-toolbar > .toolbar {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.75rem;
+  opacity: 0;
+  transition: opacity 200ms ease;
+  z-index: 10;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+div.code-toolbar:hover > .toolbar,
+div.code-toolbar:focus-within > .toolbar {
+  opacity: 1;
+}
+
+/* Language label */
+div.code-toolbar > .toolbar > .toolbar-item > span {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #94a3b8;
+  background: rgba(148, 163, 184, 0.1);
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+/* Copy button */
+div.code-toolbar > .toolbar > .toolbar-item > button,
+div.code-toolbar > .toolbar > .toolbar-item > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #cbd5e1;
+  background: rgba(148, 163, 184, 0.1);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 6px;
+  padding: 0.25rem 0.6rem;
+  cursor: pointer;
+  transition: background 200ms ease, color 200ms ease;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item > button:hover,
+div.code-toolbar > .toolbar > .toolbar-item > a:hover {
+  background: rgba(148, 163, 184, 0.2);
+  color: #f1f5f9;
+}
+
+/* Line numbers */
+pre[class*="language-"].line-numbers {
+  padding-left: 3.5rem;
+}
+
+.line-numbers .line-numbers-rows {
+  border-right: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.line-numbers .line-numbers-rows > span::before {
+  color: #475569;
+}
+
+/* Scrollbar styling for code blocks */
+pre[class*="language-"]::-webkit-scrollbar {
+  height: 6px;
+}
+
+pre[class*="language-"]::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+pre[class*="language-"]::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 3px;
+}
+
+pre[class*="language-"]::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.35);
+}
+
+/* Light mode adjustments */
+:root:not(.dark) pre[class*="language-"] {
+  background: #1e1e2e !important;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Blog content specific adjustments */
+.blog-content pre[class*="language-"] {
+  margin: 1.75rem 0;
+}
+
+.blog-content code {
+  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+}
