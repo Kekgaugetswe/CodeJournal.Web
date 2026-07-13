@@ -384,8 +384,10 @@ export class BlogDetailsComponent implements OnInit {
     this.blogPostCommentService.deleteComment(comment.id).subscribe({
       next: () => {
         comment.isDeleted = true;
-        comment.description = '[This comment has been deleted]';
+        comment.description = '';
+        comment.canDelete = false;
         comment.isDeleteLoading = false;
+        this.commentCount = Math.max(0, this.commentCount - 1);
       },
       error: (err) => {
         console.error('Failed to delete comment:', err);
