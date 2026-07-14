@@ -8,13 +8,13 @@ import { Router } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
 import { Observable, Subscription } from 'rxjs';
 import { Category } from '../../category/models/category-model.model';
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ImageSelectorComponent } from '../../../shared/components/image-selector/image-selector.component';
 import { ImageService } from '../../../shared/components/image-selector/image.service';
+import { CategoryMultiSelectComponent } from '../../../shared/components/category-multi-select/category-multi-select.component';
 
 @Component({
   selector: 'app-add-blogpost',
-  imports: [CommonModule, FormsModule, MarkdownModule,NgMultiSelectDropDownModule, ImageSelectorComponent ],
+  imports: [CommonModule, FormsModule, MarkdownModule, ImageSelectorComponent, CategoryMultiSelectComponent],
   templateUrl: './add-blogpost.component.html',
   styleUrl: './add-blogpost.component.css'
 })
@@ -26,17 +26,6 @@ export class AddBlogpostComponent implements OnInit, OnDestroy {
 
   imageSelectorSubscription?: Subscription
 
-  dropdownSettings = {
-    singleSelection: false,
-    idField: 'id',
-    textField: 'name',
-    selectAllText: 'Select All',
-    unSelectAllText: 'UnSelect All',
-    itemsShowLimit: 3,
-    allowSearchFilter: true,
-    bindValue: 'id'  ,
-    bindLabel: 'name'
-  };
   constructor( private blogPostService: BlogPostService,private router: Router, private categoryService: CategoryService, private imageService: ImageService) {
     this.model = {
       title: '',

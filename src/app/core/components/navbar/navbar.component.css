@@ -3,6 +3,8 @@
   background-color: var(--background-primary);
   border-bottom: 1px solid var(--border);
   transition: var(--transition-theme);
+  position: relative;
+  z-index: 1050;
 }
 
 :host-context(.dark) .navbar {
@@ -92,11 +94,15 @@
   border: 1px solid var(--border);
   box-shadow: var(--shadow-medium);
   transition: var(--transition-theme);
+  border-radius: 12px;
+  padding: 0.5rem;
 }
 
 .dropdown-item {
   color: var(--text-primary);
   transition: var(--transition-theme);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
 }
 
 .dropdown-item:hover,
@@ -107,6 +113,11 @@
 
 .dropdown-divider {
   border-color: var(--border);
+}
+}
+
+:host-context(.dark) .dropdown-divider {
+  border-color: rgba(148, 163, 184, 0.1);
 }
 
 /* Mobile toggler for dark mode */

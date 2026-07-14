@@ -27,9 +27,9 @@
 
 /* Dark Mode Variables */
 :host-context(.dark) {
-  --cjx-background: #08111f;
-  --cjx-surface: #0d1525;
-  --cjx-card: linear-gradient(165deg, #16263e 0%, #0c182a 100%);
+  --cjx-background: #0f172a;
+  --cjx-surface: #1e293b;
+  --cjx-card: linear-gradient(165deg, #1e293b 0%, #0f172a 100%);
   --cjx-card-border: rgba(148, 163, 184, 0.06);
   --cjx-card-border-hover: rgba(148, 163, 184, 0.15);
   --cjx-text-primary: #f8fafc;
@@ -55,7 +55,7 @@
   min-height: calc(100vh - 60px);
   padding: 4rem 2rem 5rem;
   background: var(--cjx-background);
-  overflow: hidden;
+  overflow-x: clip;
 }
 
 /* ============================================
@@ -65,6 +65,7 @@
   position: absolute;
   border-radius: 50%;
   pointer-events: none;
+  overflow: hidden;
 }
 
 .bg-glow-blue {

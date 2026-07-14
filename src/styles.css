@@ -461,3 +461,94 @@ pre[class*="language-"]::-webkit-scrollbar-thumb:hover {
 .blog-content code {
   font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
 }
+
+
+/* ============================
+   Bootstrap Table Dark Mode Fix
+   ============================ */
+:root.dark .table {
+  --bs-table-bg: transparent;
+  --bs-table-striped-bg: rgba(255, 255, 255, 0.02);
+  --bs-table-hover-bg: rgba(255, 255, 255, 0.04);
+  --bs-table-color: var(--text-primary);
+  --bs-table-border-color: var(--border);
+  color: var(--text-primary);
+}
+
+:root.dark .table thead th {
+  background-color: var(--surface);
+  color: var(--text-secondary);
+  border-color: var(--border);
+}
+
+:root.dark .table tbody td {
+  background-color: transparent;
+  color: var(--text-primary);
+  border-color: var(--border);
+}
+
+:root.dark .table-hover tbody tr:hover > td {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+
+/* ============================
+   Bootstrap Dropdown Dark Mode
+   ============================ */
+:root.dark .dropdown-menu,
+.dark .dropdown-menu {
+  background-color: #1e293b !important;
+  border: 1px solid rgba(148, 163, 184, 0.1) !important;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+  padding: 0.5rem;
+}
+
+:root.dark .dropdown-item,
+.dark .dropdown-item {
+  color: #f1f5f9 !important;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+}
+
+:root.dark .dropdown-item:hover,
+:root.dark .dropdown-item:focus,
+.dark .dropdown-item:hover,
+.dark .dropdown-item:focus {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+  color: #f8fafc !important;
+}
+
+:root.dark .dropdown-divider,
+.dark .dropdown-divider {
+  border-color: rgba(148, 163, 184, 0.1) !important;
+}
+
+
+/* ============================
+   Bootstrap Form Controls Dark Mode
+   ============================ */
+:root.dark .form-control,
+:root.dark .form-select,
+:root.dark .input-group-text {
+  background-color: var(--surface) !important;
+  border-color: var(--border) !important;
+  color: var(--text-primary) !important;
+}
+
+:root.dark .form-control::placeholder {
+  color: var(--text-muted) !important;
+}
+
+:root.dark .form-control:focus,
+:root.dark .form-select:focus {
+  background-color: var(--surface) !important;
+  border-color: var(--primary) !important;
+  color: var(--text-primary) !important;
+  box-shadow: 0 0 0 0.2rem var(--focus-ring) !important;
+}
+
+:root.dark .form-select option {
+  background-color: var(--surface);
+  color: var(--text-primary);
+}

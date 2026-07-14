@@ -34,7 +34,9 @@ export class BlogPostService {
     pageNumber: number,
     pageSize: number,
     title?: string,
-    categoryId?: string
+    categoryId?: string,
+    sortBy?: string,
+    sortDirection?: string
   ): Observable<PagedBlogPostResult> {
     let params = new HttpParams()
       .set('pageNumber', pageNumber.toString())
@@ -46,6 +48,14 @@ export class BlogPostService {
 
     if (categoryId && categoryId.trim().length > 0) {
       params = params.set('categoryId', categoryId.trim());
+    }
+
+    if (sortBy) {
+      params = params.set('sortBy', sortBy);
+    }
+
+    if (sortDirection) {
+      params = params.set('sortDirection', sortDirection);
     }
 
     return this.http

@@ -11,10 +11,11 @@ import { Category } from '../../category/models/category-model.model';
 import { CategoryService } from '../../category/services/category.service';
 import { UpdateBlogPost } from '../models/update-blog-post.model';
 import { ImageSelectorComponent } from '../../../shared/components/image-selector/image-selector.component';
+import { CategoryMultiSelectComponent } from '../../../shared/components/category-multi-select/category-multi-select.component';
 
 @Component({
   selector: 'app-edit-blogpost',
-  imports: [CommonModule, FormsModule, MarkdownModule, ImageSelectorComponent],
+  imports: [CommonModule, FormsModule, MarkdownModule, ImageSelectorComponent, CategoryMultiSelectComponent],
   templateUrl: './edit-blogpost.component.html',
   styleUrl: './edit-blogpost.component.css',
 })
@@ -30,7 +31,7 @@ export class EditBlogpostComponent implements OnInit, OnDestroy {
   model?: BlogPost;
   categories$?: Observable<Category[]>;
 
-  selectedCategories?: string[];
+  selectedCategories: string[] = [];
   isImageSelectorVisible: boolean = false;
 
   constructor(
@@ -85,7 +86,7 @@ export class EditBlogpostComponent implements OnInit, OnDestroy {
         author: this.model.author,
         publishedDate: this.model.publishedDate,
         isVisible: this.model.isVisible,
-        categories: this.selectedCategories ?? [],
+        categories: this.selectedCategories,
       };
 
       this.updateBlogSubcription = this.blogPostService

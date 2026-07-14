@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
   errorMessage: string = '';
   categories: Category[] = [];
   selectedCategoryId: string | null = null;
+  selectedSort: string = 'latest';
 
   private readonly pageSize = 6;
 
@@ -67,6 +68,10 @@ export class HomeComponent implements OnInit {
     this.loadPosts(1);
   }
 
+  onSortChange(): void {
+    this.loadPosts(1);
+  }
+
   onPageChange(page: number): void {
     this.loadPosts(page);
   }
@@ -77,7 +82,32 @@ export class HomeComponent implements OnInit {
 
     const title = this.currentTitle || undefined;
 
-    this.blogPostService.getPagedBlogPosts(pageNumber, this.pageSize, title, this.selectedCategoryId || undefined).subscribe({
+    let sortBy: string | undefined;
+    let sortDirection: string | undefined;
+
+    switch (this.selectedSort) {
+      case 'latest':
+        sortBy = 'date';
+        sortDirection = 'desc';
+        break;
+      case 'oldest':
+        sortBy = 'date';
+        sortDirection = 'asc';
+        break;
+      case 'title-asc':
+        sortBy = 'title';
+        sortDirection = 'asc';
+        break;
+      case 'title-desc':
+        sortBy = 'title';
+        sortDirection = 'desc';
+        break;
+      default:
+        sortBy = 'date';
+        sortDirection = 'desc';
+    }
+
+    this.blogPostService.getPagedBlogPosts(pageNumber, this.pageSize, title, this.selectedCategoryId || undefined, sortBy, sortDirection).subscribe({
       next: (result) => {
         this.blogs = result.data;
         this.pagination = result.pagination;

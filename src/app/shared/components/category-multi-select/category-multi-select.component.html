@@ -1,0 +1,78 @@
+<div class="multi-select-container">
+  <!-- Selected chips / trigger -->
+  <div class="select-trigger" (click)="toggleDropdown()" role="combobox" aria-haspopup="listbox" [attr.aria-expanded]="isOpen">
+    <div class="chips-area">
+      @if (selectedCategories.length === 0) {
+        <span class="placeholder-text">Select categories...</span>
+      }
+      @for (cat of selectedCategories; track cat.id) {
+        <span class="chip" [style.--chip-color]="cat.accentColor || '#818cf8'">
+          <i [class]="getCategoryIcon(cat)"></i>
+          <span class="chip-label">{{ cat.name }}</span>
+          <button type="button" class="chip-remove" (click)="removeCategory(cat.id); $event.stopPropagation()" [attr.aria-label]="'Remove ' + cat.name">
+            <i class="bi bi-x"></i>
+          </button>
+        </span>
+      }
+    </div>
+    <div class="trigger-icons">
+      @if (selectedCount > 0) {
+        <span class="selected-count">{{ selectedCount }}</span>
+      }
+      <i class="bi" [ngClass]="isOpen ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+    </div>
+  </div>
+
+  <!-- Dropdown -->
+  @if (isOpen) {
+    <div class="dropdown-panel" role="listbox">
+      <!-- Search -->
+      <div class="search-wrapper">
+        <i class="bi bi-search search-icon"></i>
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Search categories..."
+          [(ngModel)]="searchTerm"
+          (click)="$event.stopPropagation()"
+          name="categorySearch"
+          />
+      </div>
+
+      <!-- Options list -->
+      <div class="options-list">
+        @for (cat of filteredCategories; track cat.id) {
+          <label class="option-item" [class.selected]="isSelected(cat.id)">
+            <input
+              type="checkbox"
+              [checked]="isSelected(cat.id)"
+              (change)="toggleCategory(cat.id)"
+              class="option-checkbox"
+              />
+            <span class="option-icon" [style.color]="cat.accentColor || '#818cf8'">
+              <i [class]="getCategoryIcon(cat)"></i>
+            </span>
+            <span class="option-label">{{ cat.name }}</span>
+            @if (isSelected(cat.id)) {
+              <i class="bi bi-check2 option-check"></i>
+            }
+          </label>
+        }
+        @if (filteredCategories.length === 0) {
+          <div class="no-results">No categories found</div>
+        }
+      </div>
+
+      <!-- Footer -->
+      <div class="dropdown-footer">
+        <span class="footer-count">{{ selectedCount }} selected</span>
+        <div class="footer-actions">
+          @if (selectedCount > 0) {
+            <button type="button" class="btn-clear" (click)="clearAll()">Clear all</button>
+          }
+          <button type="button" class="btn-done" (click)="closeDropdown()">Done</button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

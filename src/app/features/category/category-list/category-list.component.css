@@ -68,3 +68,43 @@
   border-color: var(--border);
   color: var(--text-primary);
 }
+
+
+/* Dark mode table overrides */
+:host-context(.dark) .table-card {
+  background: var(--surface);
+}
+
+:host-context(.dark) .table-card .table {
+  --bs-table-bg: transparent;
+  --bs-table-striped-bg: transparent;
+  --bs-table-hover-bg: rgba(255, 255, 255, 0.03);
+  color: var(--text-primary);
+}
+
+:host-context(.dark) .table-card .table thead th {
+  background: var(--background-primary);
+  color: var(--text-secondary);
+  border-bottom-color: var(--border);
+}
+
+:host-context(.dark) .table-card .table tbody td {
+  color: var(--text-primary);
+  border-bottom-color: var(--border);
+  background: transparent;
+}
+
+:host-context(.dark) .table-card .table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+:host-context(.dark) .btn-light {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: var(--border);
+  color: var(--text-secondary);
+}
+
+:host-context(.dark) .btn-light:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}

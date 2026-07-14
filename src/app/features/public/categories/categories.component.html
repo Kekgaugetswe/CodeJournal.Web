@@ -48,12 +48,12 @@
         @for (category of categories; track category.id) {
           <button
             class="category-card"
-            [style.--card-accent]="getCategoryColour(category.name)"
+            [style.--card-accent]="getCategoryColour(category.name, category)"
             (click)="selectCategory(category)"
             type="button">
             <div class="card-inner">
               <div class="card-icon-wrap">
-                <i class="bi" [ngClass]="getCategoryIcon(category.name)"></i>
+                <i class="bi" [ngClass]="getCategoryIcon(category.name, category)"></i>
               </div>
               <div class="card-body">
                 <h2 class="card-title">{{ category.name }}</h2>

@@ -8,6 +8,7 @@ import { BlogPostService } from '../../blog-post/services/blog-post.service';
 import { BlogPost } from '../../blog-post/models/blog-post.model';
 import { PaginationMetadata } from '../../../shared/models/api-response.model';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
+import { getCategoryVisual } from '../../../shared/utils/category-icons';
 
 @Component({
   selector: 'app-categories',
@@ -28,62 +29,6 @@ export class CategoriesComponent implements OnInit {
   articlesError: string = '';
   pagination: PaginationMetadata | null = null;
   private readonly pageSize = 6;
-
-  private readonly categoryMeta: Record<string, { icon: string; colour: string }> = {
-    'Angular': { icon: 'bi-code-slash', colour: '#dd0031' },
-    'JavaScript': { icon: 'bi-filetype-js', colour: '#f7df1e' },
-    'TypeScript': { icon: 'bi-filetype-tsx', colour: '#3178c6' },
-    'CSS': { icon: 'bi-filetype-css', colour: '#264de4' },
-    'HTML': { icon: 'bi-filetype-html', colour: '#e34f26' },
-    'Node.js': { icon: 'bi-hdd-network', colour: '#339933' },
-    '.NET': { icon: 'bi-microsoft', colour: '#512bd4' },
-    '.NET & C#': { icon: 'bi-microsoft', colour: '#512bd4' },
-    'Python': { icon: 'bi-filetype-py', colour: '#3776ab' },
-    'DevOps': { icon: 'bi-gear-wide-connected', colour: '#0078d4' },
-    'DevOps & Cloud': { icon: 'bi-cloud-arrow-up', colour: '#0078d4' },
-    'Database': { icon: 'bi-database', colour: '#336791' },
-    'SQL & Databases': { icon: 'bi-database-fill', colour: '#336791' },
-    'APIs': { icon: 'bi-plug', colour: '#ff6b35' },
-    'Authentication': { icon: 'bi-shield-lock', colour: '#10b981' },
-    'Windows': { icon: 'bi-windows', colour: '#00a4ef' },
-    'macOS': { icon: 'bi-apple', colour: '#a2aaad' },
-    'VMware': { icon: 'bi-cpu', colour: '#607078' },
-    'Troubleshooting': { icon: 'bi-wrench-adjustable', colour: '#f59e0b' },
-    'Tutorials': { icon: 'bi-journal-code', colour: '#8b5cf6' },
-    'Tips & Tricks': { icon: 'bi-lightbulb', colour: '#eab308' },
-    'Frontend UI/UX': { icon: 'bi-palette', colour: '#ec4899' },
-    'AI Development': { icon: 'bi-robot', colour: '#06b6d4' },
-    'Git & GitHub': { icon: 'bi-git', colour: '#f05032' },
-  };
-
-  private readonly defaultMeta = { icon: 'bi-bookmark-star', colour: '#818cf8' };
-
-  private readonly categoryDescriptions: Record<string, string> = {
-    'Angular': 'Explore Angular framework tutorials, best practices, and component architecture patterns.',
-    'JavaScript': 'Dive into JavaScript fundamentals, ES6+ features, and modern development techniques.',
-    'TypeScript': 'Learn TypeScript type system, interfaces, generics, and advanced patterns for safer code.',
-    'CSS': 'Master CSS layouts, animations, responsive design, and modern styling techniques.',
-    'HTML': 'Understand HTML semantics, accessibility, forms, and modern markup best practices.',
-    'Node.js': 'Build server-side applications, REST APIs, and real-time services with Node.js.',
-    '.NET': 'Develop robust applications with .NET, C#, ASP.NET Core, and Entity Framework.',
-    '.NET & C#': 'Develop robust applications with .NET, C#, ASP.NET Core, and Entity Framework.',
-    'Python': 'Explore Python programming, data science, automation, and web development frameworks.',
-    'DevOps': 'Learn CI/CD pipelines, containerization, cloud deployment, and infrastructure automation.',
-    'DevOps & Cloud': 'Learn CI/CD pipelines, containerization, cloud deployment, and infrastructure automation.',
-    'Database': 'Understand database design, SQL queries, NoSQL solutions, and data modeling patterns.',
-    'SQL & Databases': 'Understand database design, SQL queries, NoSQL solutions, and data modeling patterns.',
-    'APIs': 'Build and consume RESTful APIs, GraphQL endpoints, and service integrations.',
-    'Authentication': 'Implement secure authentication, authorization, OAuth, and identity management.',
-    'Windows': 'Windows system administration, PowerShell scripting, and desktop development.',
-    'macOS': 'macOS development, system utilities, and Apple platform best practices.',
-    'VMware': 'Virtualization, VMware administration, and infrastructure management.',
-    'Troubleshooting': 'Debug and resolve common development issues, errors, and performance problems.',
-    'Tutorials': 'Step-by-step guides and walkthroughs for various technologies and tools.',
-    'Tips & Tricks': 'Quick productivity tips, shortcuts, and lesser-known features.',
-    'Frontend UI/UX': 'Design principles, UI patterns, accessibility, and user experience best practices.',
-    'AI Development': 'Machine learning, AI APIs, prompt engineering, and intelligent applications.',
-    'Git & GitHub': 'Version control workflows, branching strategies, and collaboration with Git.',
-  };
 
   constructor(
     private readonly categoryService: CategoryService,
@@ -121,10 +66,6 @@ export class CategoriesComponent implements OnInit {
     if (apiDesc && apiDesc.trim().length > 0) {
       return this.truncateText(apiDesc, 120);
     }
-    const mappedDesc = this.categoryDescriptions[category.name];
-    if (mappedDesc) {
-      return this.truncateText(mappedDesc, 120);
-    }
     return 'Articles and tutorials on this topic.';
   }
 
@@ -135,12 +76,16 @@ export class CategoriesComponent implements OnInit {
     return text.substring(0, limit) + '...';
   }
 
-  getCategoryIcon(name: string): string {
-    return this.categoryMeta[name]?.icon ?? this.defaultMeta.icon;
+  getCategoryIcon(name: string, category?: Category): string {
+    if (!category) return 'bi-folder';
+    const visual = getCategoryVisual(category);
+    // Strip 'bi ' prefix since template adds the 'bi' base class via [ngClass]
+    return visual.icon.replace('bi ', '');
   }
 
-  getCategoryColour(name: string): string {
-    return this.categoryMeta[name]?.colour ?? this.defaultMeta.colour;
+  getCategoryColour(name: string, category?: Category): string {
+    if (!category) return '#818cf8';
+    return getCategoryVisual(category).accent;
   }
 
   getArticleCountLabel(count: number): string {

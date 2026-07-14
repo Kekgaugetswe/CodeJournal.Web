@@ -111,19 +111,10 @@
           <div class="mt-3">
             <label for="categories" class="form-label">Categories</label>
             @if (categories$ | async; as categories) {
-              <select
-                [(ngModel)]="selectedCategories"
-                id="categories"
-                class="form-control"
-                name="categories"
-                multiple
-                >
-                @for (category of categories; track category) {
-                  <option [value]="category.id">
-                    {{ category.name }}
-                  </option>
-                }
-              </select>
+              <app-category-multi-select
+                [categories]="categories"
+                [(selectedIds)]="selectedCategories">
+              </app-category-multi-select>
             }
           </div>
           <div class="mt-3">
