@@ -9,20 +9,22 @@
     <a [routerLink]="['/admin/blogposts/add']" class="btn btn-primary">Add BlogPost</a>
   </div>
 
-  <form (ngSubmit)="onSearch()" class="mb-3">
+  <div class="mb-4">
     <div class="input-group">
-      <label for="searchTitleInput" class="visually-hidden">Search by title</label>
+      <span class="input-group-text">
+        <i class="bi bi-search"></i>
+      </span>
       <input
         type="text"
-        id="searchTitleInput"
         class="form-control"
         placeholder="Search by title..."
         [(ngModel)]="searchTitle"
         name="searchTitle"
+        (input)="onSearch()"
+        aria-label="Search blog posts"
       />
-      <button type="submit" class="btn btn-primary">Search</button>
     </div>
-  </form>
+  </div>
 
   <div class="mb-4">
     <label for="tagFilterSelect" class="visually-hidden">Filter by tag</label>

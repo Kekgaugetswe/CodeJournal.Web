@@ -3,12 +3,13 @@ import { RouterModule } from '@angular/router';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../models/category-model.model';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 
 @Component({
   selector: 'app-category-list',
-  imports: [RouterModule, CommonModule, PaginationComponent],
+  imports: [RouterModule, CommonModule, FormsModule, PaginationComponent],
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.css',
 })
@@ -18,6 +19,7 @@ export class CategoryListComponent implements OnInit {
   list: number[] = [];
   pageNumber = 1;
   pageSize = 10;
+  searchQuery: string = '';
   constructor(private readonly categoryService: CategoryService) {}
   ngOnInit(): void {
     this.categoryService.getCategoryCount().subscribe({

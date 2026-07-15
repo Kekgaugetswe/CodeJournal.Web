@@ -20,12 +20,18 @@
 
   <!-- Search -->
   <div class="mb-4">
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Search by email or username..."
-      [(ngModel)]="searchQuery"
-    />
+    <div class="input-group">
+      <span class="input-group-text">
+        <i class="bi bi-search"></i>
+      </span>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search by email or username..."
+        [(ngModel)]="searchQuery"
+        aria-label="Search users"
+      />
+    </div>
   </div>
 
   <!-- Loading -->

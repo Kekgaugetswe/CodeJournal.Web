@@ -5,13 +5,19 @@
 </div>
 
 <div class="container py-4">
-  <div class="d-flex justify-content-between mb-4">
-    <div class="d-flex">
-      <label for="categorySearchInput" class="visually-hidden">Search categories</label>
-      <input type="text" id="categorySearchInput" class="form-control" #queryText />
-      <button class="btn btn-primary ms-3" (click)="onSearch(queryText.value)">
-        Search
-      </button>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="input-group" style="max-width: 400px;">
+      <span class="input-group-text">
+        <i class="bi bi-search"></i>
+      </span>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search categories..."
+        [(ngModel)]="searchQuery"
+        (input)="onSearch(searchQuery)"
+        aria-label="Search categories"
+      />
     </div>
     <a class="btn btn-primary" [routerLink]="['/admin/categories/add']">Add Category</a>
   </div>

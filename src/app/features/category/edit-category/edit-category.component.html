@@ -35,30 +35,6 @@
             />
         </div>
 
-        <!-- Accent Color -->
-        <div class="mt-3">
-          <label class="form-label">Accent Color (optional)</label>
-          <div class="color-picker-wrapper">
-            <div class="color-presets">
-              @for (color of presetColors; track color) {
-                <button
-                  type="button"
-                  class="color-swatch"
-                  [style.background]="color"
-                  [class.active]="color === selectedAccentColor"
-                  (click)="selectColor(color)"
-                  [attr.aria-label]="'Select color ' + color">
-                </button>
-              }
-            </div>
-            <div class="color-custom">
-              <label class="form-label-sm">Custom:</label>
-              <input type="color" [(ngModel)]="selectedAccentColor" name="accentColor" class="color-input">
-              <span class="color-value">{{ selectedAccentColor }}</span>
-            </div>
-          </div>
-        </div>
-
         <div class="mt-3">
           <button type="submit" class="btn btn-primary">Save</button>
           <button type="button" class="btn btn-danger ms-3" (click)="onDelete()">Delete</button>

@@ -552,3 +552,24 @@ pre[class*="language-"]::-webkit-scrollbar-thumb:hover {
   background-color: var(--surface);
   color: var(--text-primary);
 }
+
+
+/* ============================
+   Consistent Search Bar Styling
+   ============================ */
+.input-group .input-group-text {
+  border-radius: var(--radius-md, 8px) 0 0 var(--radius-md, 8px);
+  border-right: none;
+}
+
+.input-group .form-control {
+  border-radius: 0 var(--radius-md, 8px) var(--radius-md, 8px) 0;
+}
+
+.input-group .input-group-text + .form-control {
+  border-left: none;
+}
+
+:root.dark .input-group .input-group-text i {
+  color: var(--text-muted);
+}
